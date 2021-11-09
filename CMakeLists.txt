@@ -55,11 +55,13 @@ set(SOURCE
         ${SOURCE}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.cpp
 )
 set(HEADERS
         ${HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.cpp
 )
 
 add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
@@ -79,11 +81,12 @@ if(WIN32)
             DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 endif()
 
-#install(DIRECTORY xmltemplate DESTINATION ${CMAKE_INSTALL_BINDIR})
-
+install(DIRECTORY tests DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY xmltemplate DESTINATION ${CMAKE_INSTALL_PREFIX})
+message(error,${CMAKE_INSTALL_PREFIX})
 # Add install target
 set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/")
-install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_BINDIR}/${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME})
 
 # Add uninstall target
 include(AddUninstallTarget)

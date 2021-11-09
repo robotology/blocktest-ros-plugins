@@ -12,9 +12,13 @@
 #pragma once
 namespace rossyntax
 {
-};
+constexpr char data[] = {"data"};
+constexpr char topic[] = {"topic"};
+constexpr char expected[] = {"expected"};
+};	// namespace rossyntax
 
 namespace rosactions
 {
-    constexpr char rostopicwrite[]={"rostopicwrite"};
+constexpr char rostopicwrite[] = {"rostopicwrite"};
+constexpr char rostopicread[] = {"rostopicread"};
 };

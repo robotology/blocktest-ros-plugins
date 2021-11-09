@@ -10,6 +10,7 @@
  */
 
 #include "actionTopicWrite.h"
+
 #include "rosActionDepotStart.h"
 #include "syntax.h"
 
@@ -23,13 +24,15 @@ ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, c
 
 void ActionTopicWrite::beforeExecute()
 {
+	getCommandAttribute(rossyntax::topic, topic_);
+	getCommandAttribute(rossyntax::data, data_);
 }
 
 execution ActionTopicWrite::execute(const TestRepetitions& testrepetition)
 {
-    auto publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-    auto message = std_msgs::msg::String();
-    message.data = "Hello, world! ";
-    publisher_->publish(message);
+	auto publisher = this->create_publisher<std_msgs::msg::String>(topic_, 10);
+	auto message = std_msgs::msg::String();
+	message.data = data_;
+	publisher->publish(message);
 	return execution::continueexecution;
 }
