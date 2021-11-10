@@ -9,7 +9,7 @@
   - [3.1. ROS commands](#31-ros-commands)
 
 
-Repository containing the ros plugins for blocktest
+Repository containing the ROS2 plugins for blocktest
 
 
 # 2. Installation
