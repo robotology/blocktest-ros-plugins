@@ -17,7 +17,6 @@
 #include "action.h"
 #include "general.h"
 #include "logger.h"
-
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -25,8 +24,7 @@ ACTIONDEPOTSTART(RosActionDepotStart)
 
 RosActionDepotStart::RosActionDepotStart()
 {
-	rclcpp::init(0,nullptr);
-
+	rclcpp::init(0, nullptr);
 	TXLOG(Severity::info) << "Library setup" << std::endl;
 }
 

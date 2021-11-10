@@ -31,27 +31,31 @@ void ActionTopicRead::beforeExecute()
 {
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::expected, expected_);
-	TXLOG(Severity::info) << "Topic" << topic_ << std::endl;
+	if (subscription_ == nullptr)
+		subscription_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv, this, _1));
 }
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	// subscription_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv, this, _1));
-	subscription_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, [&](const std_msgs::msg::String::ConstSharedPtr msg){
-		TXLOG(Severity::info) << "Rcv" << msg->data << std::endl;});
-	std::unique_lock<std::mutex> lk(myMutex_);
-	cv_.wait_for(lk, 10000ms);
+	rclcpp::spin_some(shared_from_this());
+	if(!received_)
+	{
+		std::stringstream logStream;
+		logStream << "Event not received: " << " topic:" << topic_;
+		addProblem(testrepetition, Severity::error, logStream.str(), false);
+	}
+	received_=false;
 	return execution::continueexecution;
 }
 
 void ActionTopicRead::callbackRcv(const std_msgs::msg::String::ConstSharedPtr msg) const
 {
-	TXLOG(Severity::info) << "Rcv" << msg->data << std::endl;
+	received_=true;
 	if (msg->data != expected_)
 	{
 		std::stringstream logStream;
 		logStream << "Read unexpected value: " << msg->data << " topic:" << topic_;
 		addProblem({0, 0}, Severity::error, logStream.str(), true);
 	}
-	cv_.notify_all();
+	TXLOG(Severity::debug) << "Callback receive:" << msg->data << std::endl;
 }

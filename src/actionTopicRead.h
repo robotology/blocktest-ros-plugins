@@ -18,7 +18,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-using namespace BlockTestCore;
+using namespace BlockTestCore;	
 
 namespace RosAction
 {
@@ -32,11 +32,10 @@ class ActionTopicRead : public Action, public rclcpp::Node
    protected:
 	std::string topic_{""};
 	std::string expected_{""};
+	mutable bool received_{false};
 
 	void callbackRcv(const std_msgs::msg::String::ConstSharedPtr msg) const;
 
-	mutable std::mutex myMutex_;
-	mutable std::condition_variable cv_;
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 
 	ACTIONREGISTER_DEC_TYPE(ActionTopicRead)
