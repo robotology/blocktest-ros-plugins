@@ -41,6 +41,7 @@ find_package(YCM REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 
 # Enable RPATH support for installed binaries and libraries
@@ -68,7 +69,7 @@ add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(${PROJECT_NAME} blocktestcore::blocktestcore
                                                                                     )
-ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs)
+ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs geometry_msgs)
 #xml template folder
 if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME}

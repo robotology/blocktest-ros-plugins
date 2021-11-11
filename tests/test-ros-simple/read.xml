@@ -5,6 +5,6 @@
 	<settings wait="0" />
 
 	<command library="general" name="wait" seconds="1" repetitions="1" wait="0" reporterror="true" />	
-	<command library="ros" name="rostopicread" topic="mytopic" expected="xxx" repetitions="1" wait="0" reporterror="true" />
+	<command library="ros" name="rostopicread" datatype="std_msg::String" topic="mytopic" expected="xxx" repetitions="1" wait="0" reporterror="true" />
 
 </testbody>

@@ -29,6 +29,7 @@ class ActionTopicWrite : public Action, public rclcpp::Node
    protected:
 	std::string topic_{""};
 	std::string data_{""};
+	std::string dataType_{"std_msgs"};//geometry_msgs/Twist
 
 	ACTIONREGISTER_DEC_TYPE(ActionTopicWrite)
 };
