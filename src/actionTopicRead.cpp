@@ -86,12 +86,12 @@ void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr m
 void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg) const
 {
 	json j = json::parse(expected_);
-	int x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
-	int y = j.at(rossyntax::dataTypeGeometryTwist).value("y", 0);
-	int z = j.at(rossyntax::dataTypeGeometryTwist).value("z", 0);
-	int xa = j.at(rossyntax::dataTypeGeometryTwist).value("xa", 0);
-	int ya = j.at(rossyntax::dataTypeGeometryTwist).value("ya", 0);
-	int za = j.at(rossyntax::dataTypeGeometryTwist).value("za", 0);
+	float x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
+	float y = j.at(rossyntax::dataTypeGeometryTwist).value("y", 0);
+	float z = j.at(rossyntax::dataTypeGeometryTwist).value("z", 0);
+	float xa = j.at(rossyntax::dataTypeGeometryTwist).value("xa", 0);
+	float ya = j.at(rossyntax::dataTypeGeometryTwist).value("ya", 0);
+	float za = j.at(rossyntax::dataTypeGeometryTwist).value("za", 0);
 
 	received_ = true;
 
