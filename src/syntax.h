@@ -17,8 +17,8 @@ constexpr char topic[] = {"topic"};
 constexpr char datatype[] = {"datatype"};
 constexpr char expected[] = {"expected"};
 
-constexpr char dataTypeGeometryTwist[] = "geometry_msgs::Twist";
-constexpr char dataString[] = "std_msg::String";
+constexpr char dataTypeGeometryTwist[] = "geometry_msgs_Twist";
+constexpr char dataString[] = "std_msg_String";
 };	// namespace rossyntax
 
 namespace rosactions

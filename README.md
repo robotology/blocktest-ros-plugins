@@ -71,15 +71,32 @@ These action blocks are contained in ros blocktest plugin.
 
     Read from ROS2 topic
 
-    ```xml
-        <command name="rostopicread" topic="" expected="" repetitions="1" wait="0" reporterror="true"/>
-    ```
+    ROS2 supported types
+    - std_msgs::msg::String  
+      ```{"std_msg_String":{"data":"tosend"}}```
+
+    - geometry_msgs::msg::Twist  
+      ```{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}```
+
+  Example:  
+  ```xml
+        <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' repetitions='1' wait='0' reporterror='true'/>
+  ```
 
 
 -   **rostopicwrite**
 
     Write to ROS2 topic
 
-    ```xml
-        <command name="rostopicwrite" topic="" data="" repetitions="1" wait="0" reporterror="true"/>
-    ```
+    ROS2 supported types
+    - std_msgs::msg::String  
+      ```{"std_msg_String":{"data":"tosend"}}```
+
+    - geometry_msgs::msg::Twist  
+      ```{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}```
+
+Example:
+
+```xml
+    <command name='rostopicwrite' topic='' data='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}' repetitions='1' wait='0' reporterror='true'/>
+```

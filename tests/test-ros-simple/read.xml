@@ -1,10 +1,10 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <testbody>
-	<info note="Publish on OS topic." shortnote="" version="1.0" />
-	<logging loggingtype="position" loggingpart="" loggingwrappername="" />
-	<settings wait="0" />
+	<info note='Publish on OS topic.' shortnote='' version='1.0' />
+	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
+	<settings wait='0' />
 
-	<command library="general" name="wait" seconds="1" repetitions="1" wait="0" reporterror="true" />	
-	<command library="ros" name="rostopicread" datatype="std_msg::String" topic="mytopic" expected="xxx" repetitions="1" wait="0" reporterror="true" />
+	<command library='general' name='wait' seconds='1' repetitions='1' wait='0' reporterror='true' />	
+	<command library='ros' name='rostopicread' topic='mytopic' expected='{"std_msg_String":{"data":"hello"}}' repetitions='1' wait='0' reporterror='true' />
 
 </testbody>

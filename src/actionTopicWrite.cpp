@@ -12,11 +12,14 @@
 #include "actionTopicWrite.h"
 
 #include <geometry_msgs/msg/twist.hpp>
+#include "std_msgs/msg/string.hpp"
+#include <nlohmann/json.hpp>
 
 #include "rosActionDepotStart.h"
 #include "syntax.h"
 
 using namespace RosAction;
+using json = nlohmann::json;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicWrite, rosactions::rostopicwrite);
 
@@ -28,36 +31,48 @@ void ActionTopicWrite::beforeExecute()
 {
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::data, data_);
-	getCommandAttribute(rossyntax::datatype, dataType_);
 }
 
 execution ActionTopicWrite::execute(const TestRepetitions& testrepetition)
 {
 	using base = std::shared_ptr<rclcpp::PublisherBase>;
-
-	if (dataType_ == rossyntax::dataString)
+	json j;
+	try
 	{
-		auto publisher = create_publisher<std_msgs::msg::String>(topic_, 10);
-		auto message = std_msgs::msg::String();
-		message.data = data_;
-		publisher->publish(message);
+		j = json::parse(data_);
+
+		if (j.contains(rossyntax::dataString))
+		{
+			auto publisher = create_publisher<std_msgs::msg::String>(topic_, 10);
+			auto message = std_msgs::msg::String();
+			std::string tmpData = j.at(rossyntax::dataString).value("data","xxx");
+			message.data = tmpData;
+			publisher->publish(message);
+		}
+		else if (j.contains(rossyntax::dataTypeGeometryTwist))
+		{
+			auto publisher = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
+			auto message = geometry_msgs::msg::Twist();
+			int x = j.at(rossyntax::dataTypeGeometryTwist).value("x",0);
+			int y = j.at(rossyntax::dataTypeGeometryTwist).value("y",0);
+			int z = j.at(rossyntax::dataTypeGeometryTwist).value("z",0);
+			int xa = j.at(rossyntax::dataTypeGeometryTwist).value("xa",0);
+			int ya = j.at(rossyntax::dataTypeGeometryTwist).value("ya",0);
+			int za = j.at(rossyntax::dataTypeGeometryTwist).value("za",0);
+
+			message.angular.x = xa;
+			message.angular.y = ya;
+			message.angular.z = za;
+			message.linear.x = x;
+			message.linear.y = y;
+			message.linear.z = z;
+			publisher->publish(message);
+		}
 	}
-	else if (dataType_ == rossyntax::dataTypeGeometryTwist)
+	catch (json::parse_error& e)
 	{
-		auto publisher = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
-		auto message = geometry_msgs::msg::Twist();
-		message.angular.z = 1;
-		message.linear.x = 2;
-		publisher->publish(message);
+		TXLOG(Severity::error) << "Parsing json:"<<e.what()<<" data:" << data_ << std::endl;
+		return execution::continueexecution;
 	}
-
-	/*
-		using derived = std::shared_ptr<rclcpp::Publisher<std_msgs::msg::String>>;
-		auto publisher = create_publisher<std_msgs::msg::String>(topic_, 10);
-
-		derived tmp = std::dynamic_pointer_cast<rclcpp::Publisher<std_msgs::msg::String>>(publisher);
-		auto message = std_msgs::msg::String();
-		message.data = data_;
-		tmp->publish(message);*/
 	return execution::continueexecution;
 }

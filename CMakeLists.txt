@@ -8,6 +8,7 @@
 # @author Luca Tricerri <luca.tricerri@iit.it>  
 
 cmake_minimum_required(VERSION 3.5)
+include(FetchContent)
 #Module creation
 
 project(blocktestrosplugins
@@ -43,6 +44,17 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
+#JSON
+FetchContent_Declare(
+  json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.9.1)
+
+FetchContent_GetProperties(json)
+if(NOT json_POPULATED)
+  FetchContent_Populate(json)
+  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
 
 # Enable RPATH support for installed binaries and libraries
 include(AddInstallRPATHSupport)
@@ -68,7 +80,8 @@ set(HEADERS
 add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(${PROJECT_NAME} blocktestcore::blocktestcore
-                                                                                    )
+                                      nlohmann_json::nlohmann_json
+                                      )
 ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs geometry_msgs)
 #xml template folder
 if(WIN32)

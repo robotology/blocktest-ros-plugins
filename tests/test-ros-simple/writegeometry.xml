@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<testbody>
-	<info note="Publish on OS topic." shortnote="" version="1.0" />
-	<logging loggingtype="position" loggingpart="" loggingwrappername="" />
-	<settings wait="0" />
-	
-	<command library="ros" name="rostopicwrite" datatype="geometry_msgs::Twist" topic="/turtle1/cmd_vel" data="xxx" repetitions="1" wait="1" reporterror="true" />
-
-</testbody>
