@@ -7,6 +7,7 @@
   - [2.2. Installation and compilation](#22-installation-and-compilation)
 - [3. Available commands](#3-available-commands)
   - [3.1. ROS commands](#31-ros-commands)
+- [4. Troubleshooting](#4-troubleshooting)
 
 
 Repository containing the ROS2 plugins for blocktest
@@ -23,12 +24,12 @@ Boost library version must be >1.64.
 ```bash
 sudo apt-get install -y cmake libboost-all-dev
 ```
-ROS2 see https://docs.ros.org/en/rolling/Installation.html
+**ROS2 Foxy** version see https://docs.ros.org/en/rolling/Installation.html
 
 
 ## 2.2. Installation and compilation
 
-In order to compile just execute the following commands in a bash
+To compile just execute the following commands in a bash
 terminal.
 ```bash
 git clone https://github.com/robotology/blocktest-ros-plugins     
@@ -100,3 +101,9 @@ Example:
 ```xml
     <command name='rostopicwrite' topic='' data='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}' repetitions='1' wait='0' reporterror='true'/>
 ```
+
+# 4. Troubleshooting
+
+- If tests don't work check ROS2 version and be sure that you have only one version installed.
+- If ROS2 doesn't start check if you have executed the preliminary ROS2 bash script.
+- Be careful with quotes and double quotes in tests.
