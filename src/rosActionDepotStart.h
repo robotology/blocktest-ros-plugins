@@ -30,4 +30,6 @@ class RosActionDepotStart :public ActionDepotStart
         void configure(const std::map<std::string,std::string>&) override;
         void stop() override;
 
+        static std::string generateNodeName();
+
 };

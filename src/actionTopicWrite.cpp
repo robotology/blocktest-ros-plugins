@@ -23,7 +23,7 @@ using json = nlohmann::json;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicWrite, rosactions::rostopicwrite);
 
-ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode), Node("rostopicwrite")
+ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode), Node(RosActionDepotStart::generateNodeName())
 {
 }
 
@@ -48,6 +48,7 @@ execution ActionTopicWrite::execute(const TestRepetitions& testrepetition)
 			std::string tmpData = j.at(rossyntax::dataString).value("data","xxx");
 			message.data = tmpData;
 			publisher->publish(message);
+			publisher.reset();
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
@@ -67,6 +68,7 @@ execution ActionTopicWrite::execute(const TestRepetitions& testrepetition)
 			message.linear.y = y;
 			message.linear.z = z;
 			publisher->publish(message);
+			publisher.reset();
 		}
 	}
 	catch (json::parse_error& e)

@@ -42,3 +42,11 @@ void RosActionDepotStart::stop()
 RosActionDepotStart::~RosActionDepotStart()
 {
 }
+
+std::string RosActionDepotStart::generateNodeName()
+{
+	static int count=0;
+	std::string out="MyNode"+std::to_string(count);
+	count++;
+	return out;
+}
