@@ -5,7 +5,8 @@ This test is designed for testing ROS2 applications.
 - [Robotology-superbuild](https://github.com/robotology/robotology-superbuild)
 - [Blocktest](https://github.com/robotology/blocktest)
 - [Blocktest-ros](https://github.com/robotology/blocktest-ros-plugins)
-- Install ROS2 turtle
+- Install ROS2 foxy
+- Install ROS2 turtleSim application
 ```bash
     sudo apt update
     sudo apt install ros-foxy-turtlesim

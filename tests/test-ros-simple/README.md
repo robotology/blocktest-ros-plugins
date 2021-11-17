@@ -5,6 +5,7 @@ This test is designed for testing ROS2 applications.
 - [Robotology-superbuild](https://github.com/robotology/robotology-superbuild)
 - [Blocktest](https://github.com/robotology/blocktest)
 - [Blocktest-ros](https://github.com/robotology/blocktest-ros-plugins)
+- Install ROS2 foxy
 
 # 3. Execution
 ```bash
