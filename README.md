@@ -4,6 +4,8 @@
 - [1. blocktest-ros-plugins](#1-blocktest-ros-plugins)
 - [2. Installation](#2-installation)
   - [2.1. Prerequisite Linux](#21-prerequisite-linux)
+    - [2.1.1. ROS2](#211-ros2)
+    - [2.1.2. Blocktest](#212-blocktest)
   - [2.2. Installation and compilation](#22-installation-and-compilation)
 - [3. Available commands](#3-available-commands)
   - [3.1. ROS commands](#31-ros-commands)
@@ -21,10 +23,16 @@ Boost library version must be >1.64.
 
 ## 2.1. Prerequisite Linux
 
+Install the following:
 ```bash
 sudo apt-get install -y cmake libboost-all-dev
 ```
+
+### 2.1.1. ROS2
 **ROS2 Foxy** version see https://docs.ros.org/en/rolling/Installation.html
+
+### 2.1.2. Blocktest
+See https://github.com/robotology/blocktest
 
 
 ## 2.2. Installation and compilation
@@ -64,7 +72,7 @@ make install
 ```
 
 # 3. Available commands
-These action blocks are contained in ros blocktest plugin.
+These action blocks are contained in blocktest-ros-plugin.
 
 ## 3.1. ROS commands
 
