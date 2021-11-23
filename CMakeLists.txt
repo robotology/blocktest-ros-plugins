@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-# Copyright (C) 2019 Fondazione Istitito Italiano di Tecnologia (IIT)          #
+# Copyright (C) 2021 Fondazione Istitito Italiano di Tecnologia (IIT)          #
 # All Rights Reserved.                                                         #
 #                                                                              #
 ################################################################################
@@ -74,7 +74,8 @@ set(HEADERS
         ${HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/syntax.h
 )
 
 add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
