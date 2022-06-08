@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <memory>
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 
 #include "rosActionDepotStart.h"
 #include "syntax.h"
