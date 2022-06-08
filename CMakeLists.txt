@@ -99,7 +99,9 @@ endif()
 
 install(DIRECTORY tests DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(DIRECTORY xmltemplate DESTINATION ${CMAKE_INSTALL_BINDIR})
-
+message(error,"----------------------")
+message(error,${CMAKE_INSTALL_BINDIR})
+message(error,"----------------------")
 # Add install target
 set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/")
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_BINDIR}/${PROJECT_NAME})
