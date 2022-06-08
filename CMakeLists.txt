@@ -9,6 +9,7 @@
 
 cmake_minimum_required(VERSION 3.5)
 include(FetchContent)
+include(GNUInstallDirs)
 #Module creation
 
 project(blocktestrosplugins
@@ -99,6 +100,7 @@ endif()
 
 install(DIRECTORY tests DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(DIRECTORY xmltemplate DESTINATION ${CMAKE_INSTALL_BINDIR})
+
 message(error,"----------------------")
 message(error,${CMAKE_INSTALL_BINDIR})
 message(error,"----------------------")
