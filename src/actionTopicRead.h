@@ -29,6 +29,7 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	ActionTopicRead(const CommandAttributes& commandAttributes, const std::string& testCode);
 	execution execute(const TestRepetitions& testrepetition) override;
 	void beforeExecute() override;
+	~ActionTopicRead();
 
    protected:
 	std::string topic_{""};
@@ -38,8 +39,8 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	void callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg) const;
 	void callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg) const;
 
-	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_;
-	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_;
+	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_{nullptr};
+	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_{nullptr};
 
 	ACTIONREGISTER_DEC_TYPE(ActionTopicRead)
 };

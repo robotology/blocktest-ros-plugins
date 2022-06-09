@@ -66,14 +66,14 @@ void ActionTopicRead::beforeExecute()
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	for(int t=0;t<10;++t)
+	for (int t = 0; t < 10; ++t)
 	{
 		rclcpp::spin_some(shared_from_this());
 		std::this_thread::sleep_for(100ms);
-		if(received_)
-		break;
+		if (received_)
+			break;
 	}
-	
+
 	if (!received_)
 	{
 		std::stringstream logStream;
@@ -121,4 +121,10 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 	}
 
 	TXLOG(Severity::debug) << "Callback receive geometry_msgs::msg::Twist:" << std::endl;
+}
+
+ActionTopicRead::~ActionTopicRead()
+{
+	subscription_std_msgs_String_ = nullptr
+	subscription_geometry_msgs_Twist_=nullptr;
 }
