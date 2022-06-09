@@ -41,7 +41,7 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_;
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_;
 
-	rclcpp::executors::StaticSingleThreadedExecutor _exec;
+	rclcpp::executors::StaticSingleThreadedExecutor exec_;
 	ACTIONREGISTER_DEC_TYPE(ActionTopicRead)
 };
 

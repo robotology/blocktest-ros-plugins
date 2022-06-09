@@ -75,7 +75,7 @@ execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
 	for (int t = 0; t < 10; ++t)
 	{
-		_exec.spin_once(shared_from_this());
+		exec_.spin_once();
 		std::this_thread::sleep_for(100ms);
 		if (received_)
 			break;
