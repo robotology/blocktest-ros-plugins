@@ -33,7 +33,7 @@ void ActionTopicWrite::beforeExecute()
 	getCommandAttribute(rossyntax::data, data_);
 }
 
-execution ActionTopicWrite::execute(const TestRepetitions& testrepetition)
+execution ActionTopicWrite::execute(const TestRepetitions& )
 {
 	//using base = std::shared_ptr<rclcpp::PublisherBase>;
 	json j;
