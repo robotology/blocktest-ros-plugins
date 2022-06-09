@@ -125,6 +125,6 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 
 ActionTopicRead::~ActionTopicRead()
 {
-	subscription_std_msgs_String_ = nullptr
+	subscription_std_msgs_String_ = nullptr;
 	subscription_geometry_msgs_Twist_=nullptr;
 }

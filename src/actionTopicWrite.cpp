@@ -35,7 +35,7 @@ void ActionTopicWrite::beforeExecute()
 
 execution ActionTopicWrite::execute(const TestRepetitions& testrepetition)
 {
-	using base = std::shared_ptr<rclcpp::PublisherBase>;
+	//using base = std::shared_ptr<rclcpp::PublisherBase>;
 	json j;
 	try
 	{

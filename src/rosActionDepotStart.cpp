@@ -28,7 +28,7 @@ RosActionDepotStart::RosActionDepotStart()
 	TXLOG(Severity::info) << "Library setup" << std::endl;
 }
 
-void RosActionDepotStart::configure(const std::map<std::string, std::string> &conf)
+void RosActionDepotStart::configure(const std::map<std::string, std::string> &)
 {
 	TXLOG(Severity::info) << "Library config called:" << std::endl;
 }
