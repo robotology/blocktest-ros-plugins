@@ -12,8 +12,13 @@
 
 #include <functional>
 #include <memory>
-#include "json.hpp"
+#include <thread>
+#include <chrono>
+using namespace std::chrono_literals;
 
+
+
+#include "json.hpp"
 #include "rosActionDepotStart.h"
 #include "syntax.h"
 
@@ -30,6 +35,8 @@ ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, con
 
 void ActionTopicRead::beforeExecute()
 {
+	exec_.add_node(shared_from_this());
+
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::expected, expected_);
 
@@ -40,12 +47,22 @@ void ActionTopicRead::beforeExecute()
 		if (j.contains(rossyntax::dataString))
 		{
 			if (subscription_std_msgs_String_ == nullptr)
+			{
 				subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv1, this, _1));
+				TXLOG(Severity::debug) << "Subscribe to msg type:string" << std::endl;
+			}
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
 			if (subscription_geometry_msgs_Twist_ == nullptr)
+			{
 				subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv2, this, _1));
+				TXLOG(Severity::debug) << "Subscribe to msg type:geometry_twist" << std::endl;
+			}
+		}
+		else
+		{
+			TXLOG(Severity::error) << "Not supported data type" << std::endl;
 		}
 	}
 	catch (json::parse_error& e)
@@ -56,7 +73,14 @@ void ActionTopicRead::beforeExecute()
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	rclcpp::spin_some(shared_from_this());
+	for (int t = 0; t < 10; ++t)
+	{
+		_exec.spin_once(shared_from_this());
+		std::this_thread::sleep_for(100ms);
+		if (received_)
+			break;
+	}
+
 	if (!received_)
 	{
 		std::stringstream logStream;

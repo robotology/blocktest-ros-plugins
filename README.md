@@ -10,6 +10,8 @@
 - [3. Available commands](#3-available-commands)
   - [3.1. ROS commands](#31-ros-commands)
 - [4. Troubleshooting](#4-troubleshooting)
+- [5. Debug tools](#5-debug-tools)
+  - [5.1. Subscribe to topics with cmdline](#51-subscribe-to-topics-with-cmdline)
 
 
 Repository containing the ROS2 plugins for blocktest
@@ -115,3 +117,9 @@ Example:
 - If tests don't work check ROS2 version and be sure that you have only one version installed.
 - If ROS2 doesn't start check if you have executed the preliminary ROS2 bash script.
 - Be careful with quotes and double quotes in tests.
+
+# 5. Debug tools
+
+## 5.1. Subscribe to topics with cmdline
+
+`ros2 topic  echo /mytopic`
