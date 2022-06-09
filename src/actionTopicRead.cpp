@@ -66,22 +66,20 @@ void ActionTopicRead::beforeExecute()
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	for (int t = 0; t < 10; ++t)
+	// while (true)
+	//  for (int t = 0; t < 10; ++t)
 	{
-		rclcpp::spin_some(shared_from_this());
-		std::this_thread::sleep_for(100ms);
-		if (received_)
-			break;
-	}
+		rclcpp::spin(shared_from_this());
 
-	if (!received_)
-	{
-		std::stringstream logStream;
-		logStream << "Event not received: "
-				  << " topic:" << topic_;
-		addProblem(testrepetition, Severity::error, logStream.str(), true);
+		if (!received_)
+		{
+			std::stringstream logStream;
+			logStream << "Event not received: "
+					  << " topic:" << topic_;
+			addProblem(testrepetition, Severity::error, logStream.str(), true);
+		}
+		received_ = false;
 	}
-	received_ = false;
 	return execution::continueexecution;
 }
 
@@ -126,5 +124,5 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 ActionTopicRead::~ActionTopicRead()
 {
 	subscription_std_msgs_String_ = nullptr;
-	subscription_geometry_msgs_Twist_=nullptr;
+	subscription_geometry_msgs_Twist_ = nullptr;
 }
