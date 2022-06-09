@@ -12,11 +12,6 @@
 
 #include <functional>
 #include <memory>
-#include <thread>
-#include <chrono>
-using namespace std::chrono_literals;
-
-
 
 #include "json.hpp"
 #include "rosActionDepotStart.h"
@@ -35,8 +30,6 @@ ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, con
 
 void ActionTopicRead::beforeExecute()
 {
-	exec_.add_node(shared_from_this());
-
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::expected, expected_);
 
@@ -73,14 +66,14 @@ void ActionTopicRead::beforeExecute()
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	for (int t = 0; t < 10; ++t)
+	for(int t=0;t<10;++t)
 	{
-		exec_.spin_once();
+		rclcpp::spin_some(shared_from_this());
 		std::this_thread::sleep_for(100ms);
-		if (received_)
-			break;
+		if(received_)
+		break;
 	}
-
+	
 	if (!received_)
 	{
 		std::stringstream logStream;
