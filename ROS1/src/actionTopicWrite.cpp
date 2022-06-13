@@ -13,7 +13,7 @@
 
 #include "json.hpp"
 
-#include "rosActionDepotStart.h"
+#include "ros1ActionDepotStart.h"
 #include "syntax.h"
 
 using namespace RosAction;
@@ -21,7 +21,7 @@ using json = nlohmann::json;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicWrite, rosactions::rostopicwrite);
 
-ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode)//, Node(RosActionDepotStart::generateNodeName())
+ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode)//, Node(Ros1ActionDepotStart::generateNodeName())
 {
 }
 

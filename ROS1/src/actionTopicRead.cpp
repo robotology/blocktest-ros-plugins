@@ -8,13 +8,13 @@
 /**
  * @author Luca Tricerri <luca.tricerri@iit.it>
  */
-#include "actionTopicRead.h"
-
 #include <functional>
 #include <memory>
 
+
+#include "actionTopicRead.h"
 #include "json.hpp"
-#include "rosActionDepotStart.h"
+#include "ros1ActionDepotStart.h"
 #include "syntax.h"
 
 using std::placeholders::_1;
@@ -24,7 +24,7 @@ using namespace RosAction;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicRead, rosactions::rostopicread);
 
-ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode)//, Node(RosActionDepotStart::generateNodeName())
+ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode)//, Node(Ros1ActionDepotStart::generateNodeName())
 {
 }
 

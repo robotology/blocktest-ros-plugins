@@ -9,7 +9,7 @@
  * @author Luca Tricerri <luca.tricerri@iit.it>
  */
 
-#include "rosActionDepotStart.h"
+#include "ros1ActionDepotStart.h"
 
 #include <map>
 #include <string>
@@ -19,30 +19,30 @@
 #include "logger.h"
 #include <ros/ros.h>
 
-ACTIONDEPOTSTART(RosActionDepotStart)
+ACTIONDEPOTSTART(Ros1ActionDepotStart)
 
-RosActionDepotStart::RosActionDepotStart()
+Ros1ActionDepotStart::Ros1ActionDepotStart()
 {
 	//ros::init(0, nullptr);
 	TXLOG(Severity::info) << "Library setup" << std::endl;
 }
 
-void RosActionDepotStart::configure(const std::map<std::string, std::string> &)
+void Ros1ActionDepotStart::configure(const std::map<std::string, std::string> &)
 {
 	TXLOG(Severity::info) << "Library config called:" << std::endl;
 }
 
-void RosActionDepotStart::stop()
+void Ros1ActionDepotStart::stop()
 {
 	TXLOG(Severity::info) << "Library stop called:" << std::endl;
 	//rclcpp::shutdown();
 }
 
-RosActionDepotStart::~RosActionDepotStart()
+Ros1ActionDepotStart::~Ros1ActionDepotStart()
 {
 }
 
-std::string RosActionDepotStart::generateNodeName()
+std::string Ros1ActionDepotStart::generateNodeName()
 {
 	static int count=0;
 	std::string out="MyNode"+std::to_string(count);

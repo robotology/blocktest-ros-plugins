@@ -19,11 +19,11 @@ using namespace BlockTestCore;
 
 using std::placeholders::_1;
 
-class RosActionDepotStart :public ActionDepotStart
+class Ros1ActionDepotStart :public ActionDepotStart
 {
     public:
-        RosActionDepotStart(); 
-        ~RosActionDepotStart() override;
+        Ros1ActionDepotStart(); 
+        ~Ros1ActionDepotStart() override;
 
         void configure(const std::map<std::string,std::string>&) override;
         void stop() override;
