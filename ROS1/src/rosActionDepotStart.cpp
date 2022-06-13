@@ -23,7 +23,7 @@ ACTIONDEPOTSTART(RosActionDepotStart)
 
 RosActionDepotStart::RosActionDepotStart()
 {
-	ros::init(0, nullptr);
+	//ros::init(0, nullptr);
 	TXLOG(Severity::info) << "Library setup" << std::endl;
 }
 
