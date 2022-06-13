@@ -71,7 +71,7 @@ target_link_libraries(${PROJECT_NAME} blocktestcore::blocktestcore
                                       #nlohmann_json::nlohmann_json
                                       roscpp
                                       )
-ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs geometry_msgs)
+
 #xml template folder
 if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME}
