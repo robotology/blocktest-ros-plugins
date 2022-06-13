@@ -23,7 +23,8 @@ ACTIONDEPOTSTART(Ros1ActionDepotStart)
 
 Ros1ActionDepotStart::Ros1ActionDepotStart()
 {
-	//ros::init(0, nullptr);
+	int tmp;
+	ros::init(tmp, nullptr,"Blocktest_Node");
 	TXLOG(Severity::info) << "Library setup" << std::endl;
 }
 
@@ -35,7 +36,7 @@ void Ros1ActionDepotStart::configure(const std::map<std::string, std::string> &)
 void Ros1ActionDepotStart::stop()
 {
 	TXLOG(Severity::info) << "Library stop called:" << std::endl;
-	//rclcpp::shutdown();
+	ros::shutdown();
 }
 
 Ros1ActionDepotStart::~Ros1ActionDepotStart()

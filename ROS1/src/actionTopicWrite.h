@@ -11,14 +11,15 @@
 
 #pragma once
 
+#include <ros/ros.h>
+
 #include "action.h"
-//#include "rclcpp/rclcpp.hpp"
 
 using namespace BlockTestCore;
 
 namespace RosAction
 {
-class ActionTopicWrite : public Action//, public ros::Node
+class ActionTopicWrite : public Action	//, public ros::Node
 {
    public:
 	ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode);
@@ -28,6 +29,9 @@ class ActionTopicWrite : public Action//, public ros::Node
    protected:
 	std::string topic_{""};
 	std::string data_{""};
+
+	ros::NodeHandle nodeHandler_;
+	ros::Publisher publisher_;
 
 	ACTIONREGISTER_DEC_TYPE(ActionTopicWrite)
 };

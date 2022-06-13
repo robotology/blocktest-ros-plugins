@@ -40,7 +40,7 @@ set(YARP_MINIMUM_REQUIRED_VERSION 3.0.102)
 
 find_package(blocktestcore 2.3.0 REQUIRED)
 find_package(YCM REQUIRED)
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs)
 
 # Enable RPATH support for installed binaries and libraries
 include(AddInstallRPATHSupport)
@@ -68,7 +68,7 @@ set(HEADERS
 add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${catkin_INCLUDE_DIRS} )
 target_link_libraries(${PROJECT_NAME} blocktestcore::blocktestcore
-                                      ${catkin_INCLUDE_DIRS}
+                                        ${catkin_LIBRARIES}
                                       )
 
 #xml template folder
@@ -83,7 +83,7 @@ if(WIN32)
             DESTINATION ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 endif()
 
-install(DIRECTORY tests DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(DIRECTORY testsRos1 DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(DIRECTORY xmltemplate DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Add install target
