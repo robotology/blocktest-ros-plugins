@@ -52,13 +52,13 @@ add_install_rpath_support(BIN_DIRS "${CMAKE_INSTALL_FULL_BINDIR}"
 
 set(SOURCE
         ${SOURCE}
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/ros1ActionDepotStart.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.cpp
 )
 set(HEADERS
         ${HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/ros1ActionDepotStart.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/syntax.h
