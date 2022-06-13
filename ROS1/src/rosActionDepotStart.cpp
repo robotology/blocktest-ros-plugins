@@ -35,7 +35,7 @@ void RosActionDepotStart::configure(const std::map<std::string, std::string> &)
 void RosActionDepotStart::stop()
 {
 	TXLOG(Severity::info) << "Library stop called:" << std::endl;
-	rclcpp::shutdown();
+	//rclcpp::shutdown();
 }
 
 RosActionDepotStart::~RosActionDepotStart()
