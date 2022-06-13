@@ -4,7 +4,7 @@
 - [1. blocktest-ros1-plugins](#1-blocktest-ros1-plugins)
 - [2. Installation](#2-installation)
   - [2.1. Prerequisite Linux](#21-prerequisite-linux)
-    - [2.1.1. ROS2](#211-ros2)
+    - [2.1.1. ROS1](#211-ros1)
     - [2.1.2. Blocktest](#212-blocktest)
   - [2.2. Installation and compilation](#22-installation-and-compilation)
 - [3. Available commands](#3-available-commands)
@@ -12,9 +12,10 @@
 - [4. Troubleshooting](#4-troubleshooting)
 - [5. Debug tools](#5-debug-tools)
   - [5.1. Subscribe to topics with cmdline](#51-subscribe-to-topics-with-cmdline)
+- [6. Warnings](#6-warnings)
 
 
-Repository containing the ROS2 plugins for blocktest
+Repository containing the ROS1 plugins for blocktest
 
 
 # 2. Installation
@@ -30,8 +31,8 @@ Install the following:
 sudo apt-get install -y cmake libboost-all-dev
 ```
 
-### 2.1.1. ROS2
-**ROS2 Foxy** version see https://docs.ros.org/en/rolling/Installation.html
+### 2.1.1. ROS1
+**ROS1 Noetic** version see http://wiki.ros.org/noetic/Installation
 
 ### 2.1.2. Blocktest
 See https://github.com/robotology/blocktest
@@ -98,6 +99,10 @@ todo
 
 todo
 
-`ros2 topic  echo /mytopic`
+`ROS1 topic  echo /mytopic`
 
-`ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"`
+`ROS1 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"`
+
+# 6. Warnings
+
+ROS1 needs `roscore` to be executed
