@@ -12,13 +12,13 @@
 #pragma once
 
 #include "action.h"
-#include "rclcpp/rclcpp.hpp"
+//#include "rclcpp/rclcpp.hpp"
 
 using namespace BlockTestCore;
 
 namespace RosAction
 {
-class ActionTopicWrite : public Action, public rclcpp::Node
+class ActionTopicWrite : public Action//, public ros::Node
 {
    public:
 	ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode);

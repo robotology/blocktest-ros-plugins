@@ -17,14 +17,13 @@
 #include "action.h"
 #include "general.h"
 #include "logger.h"
-#include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
+#include "ros/ros.h"
 
 ACTIONDEPOTSTART(RosActionDepotStart)
 
 RosActionDepotStart::RosActionDepotStart()
 {
-	rclcpp::init(0, nullptr);
+	ros::init(0, nullptr);
 	TXLOG(Severity::info) << "Library setup" << std::endl;
 }
 

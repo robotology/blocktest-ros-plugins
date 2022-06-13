@@ -1,6 +1,6 @@
 /******************************************************************************
  *                                                                            *
- * Copyright (C) 2021 Fondazione Istituto Italiano di Tecnologia (IIT)        *
+ * Copyright (C) 2022 Fondazione Istituto Italiano di Tecnologia (IIT)        *
  * All Rights Reserved.                                                       *
  *                                                                            *
  ******************************************************************************/
@@ -11,8 +11,6 @@
 
 #include "actionTopicWrite.h"
 
-#include <geometry_msgs/msg/twist.hpp>
-#include "std_msgs/msg/string.hpp"
 #include "json.hpp"
 
 #include "rosActionDepotStart.h"
@@ -23,7 +21,7 @@ using json = nlohmann::json;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicWrite, rosactions::rostopicwrite);
 
-ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode), Node(RosActionDepotStart::generateNodeName())
+ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode)//, Node(RosActionDepotStart::generateNodeName())
 {
 }
 
@@ -43,17 +41,17 @@ execution ActionTopicWrite::execute(const TestRepetitions& )
 
 		if (j.contains(rossyntax::dataString))
 		{
-			auto publisher = create_publisher<std_msgs::msg::String>(topic_, 10);
-			auto message = std_msgs::msg::String();
+			//auto publisher = create_publisher<std_msgs::msg::String>(topic_, 10);
+			//auto message = std_msgs::msg::String();
 			std::string tmpData = j.at(rossyntax::dataString).value("data","xxx");
-			message.data = tmpData;
-			publisher->publish(message);
-			publisher.reset();
+			//message.data = tmpData;
+			//publisher->publish(message);
+			//publisher.reset();
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
-			auto publisher = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
-			auto message = geometry_msgs::msg::Twist();
+			//auto publisher = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
+			//auto message = geometry_msgs::msg::Twist();
 			float x = j.at(rossyntax::dataTypeGeometryTwist).value("x",0);
 			float y = j.at(rossyntax::dataTypeGeometryTwist).value("y",0);
 			float z = j.at(rossyntax::dataTypeGeometryTwist).value("z",0);
@@ -61,14 +59,14 @@ execution ActionTopicWrite::execute(const TestRepetitions& )
 			float ya = j.at(rossyntax::dataTypeGeometryTwist).value("ya",0);
 			float za = j.at(rossyntax::dataTypeGeometryTwist).value("za",0);
 
-			message.angular.x = xa;
+			/*message.angular.x = xa;
 			message.angular.y = ya;
 			message.angular.z = za;
 			message.linear.x = x;
 			message.linear.y = y;
 			message.linear.z = z;
 			publisher->publish(message);
-			publisher.reset();
+			publisher.reset();*/
 		}
 	}
 	catch (json::parse_error& e)

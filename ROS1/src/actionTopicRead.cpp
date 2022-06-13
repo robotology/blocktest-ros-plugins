@@ -24,7 +24,7 @@ using namespace RosAction;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicRead, rosactions::rostopicread);
 
-ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode), Node(RosActionDepotStart::generateNodeName())
+ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, const std::string& testCode) : Action(commandAttributes, testCode)//, Node(RosActionDepotStart::generateNodeName())
 {
 }
 
@@ -39,19 +39,19 @@ void ActionTopicRead::beforeExecute()
 
 		if (j.contains(rossyntax::dataString))
 		{
-			if (subscription_std_msgs_String_ == nullptr)
-			{
-				subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv1, this, _1));
-				TXLOG(Severity::debug) << "Subscribe to msg type:string" << std::endl;
-			}
+			//if (subscription_std_msgs_String_ == nullptr)
+			//{
+			//	subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv1, this, _1));
+			//	TXLOG(Severity::debug) << "Subscribe to msg type:string" << std::endl;
+			//}
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
-			if (subscription_geometry_msgs_Twist_ == nullptr)
-			{
-				subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv2, this, _1));
-				TXLOG(Severity::debug) << "Subscribe to msg type:geometry_twist" << std::endl;
-			}
+			//if (subscription_geometry_msgs_Twist_ == nullptr)
+			//{
+			//	subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv2, this, _1));
+			//	TXLOG(Severity::debug) << "Subscribe to msg type:geometry_twist" << std::endl;
+			//}
 		}
 		else
 		{
@@ -66,10 +66,9 @@ void ActionTopicRead::beforeExecute()
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	// while (true)
-	//  for (int t = 0; t < 10; ++t)
+
 	{
-		rclcpp::spin(shared_from_this());
+		//rclcpp::spin(shared_from_this());
 
 		if (!received_)
 		{
@@ -82,7 +81,7 @@ execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 	}
 	return execution::continueexecution;
 }
-
+/*
 void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg) const
 {
 	json j = json::parse(expected_);
@@ -120,9 +119,9 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 
 	TXLOG(Severity::debug) << "Callback receive geometry_msgs::msg::Twist:" << std::endl;
 }
-
+*/
 ActionTopicRead::~ActionTopicRead()
 {
-	subscription_std_msgs_String_ = nullptr;
-	subscription_geometry_msgs_Twist_ = nullptr;
+	//subscription_std_msgs_String_ = nullptr;
+	//subscription_geometry_msgs_Twist_ = nullptr;
 }
