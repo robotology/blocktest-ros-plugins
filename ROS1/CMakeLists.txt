@@ -93,5 +93,3 @@ install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_BINDIR}/${PR
 
 # Add uninstall target
 include(AddUninstallTarget)
-
-ament_package()
