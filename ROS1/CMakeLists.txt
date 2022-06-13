@@ -68,8 +68,7 @@ set(HEADERS
 add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${catkin_INCLUDE_DIRS} )
 target_link_libraries(${PROJECT_NAME} blocktestcore::blocktestcore
-                                      #nlohmann_json::nlohmann_json
-                                      roscpp
+                                      ${catkin_INCLUDE_DIRS}
                                       )
 
 #xml template folder
