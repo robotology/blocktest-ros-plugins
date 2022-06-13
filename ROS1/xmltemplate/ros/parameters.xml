@@ -1,0 +1,120 @@
+<wrappername 
+    short="wrapper name" 
+    full="name of the wrapper for this joint" 
+    values=""  
+    uom="" 
+    type="string" 
+    editable="true" 
+    emphasize="false"
+/>
+
+<jointname 
+    short="joint name" 
+    full="joint name for this command, can be a list" 
+    values=""  
+    uom="" 
+    type="string" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<degree 
+    short="degree" 
+    full="movment extension" 
+    values=""  
+    uom="degree" 
+    type="double" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<velocity 
+    short="used velocity" 
+    full="used velocity for this command" 
+    values=""  
+    uom="degree/second"  
+    type="double" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+
+<profile 
+    short="pwm profile" 
+    full="profile used for this command" 
+    values="const sin"  
+    uom="voltage" 
+    type="double" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<frequency 
+    short="command frequency" 
+    full="frequency used for this command" 
+    values=""  
+    uom="hertz" 
+    type="double" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<dutycycle 
+    short="pwm dutycycle" 
+    full="pwm dutycycle for this command" 
+    values=""  
+    uom="" 
+    type="double" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<time 
+    short="cycles numbers" 
+    full="cycles executions number" 
+    values=""  
+    uom="" 
+    type="integer" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<portname 
+    short="port name" 
+    full="port name" 
+    values=""  
+    uom="" 
+    type="string" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<source
+    short="source port name" 
+    full="source port name" 
+    values=""  
+    uom="" 
+    type="string" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<destination
+    short="destination port name" 
+    full="destination port name" 
+    values=""  
+    uom="" 
+    type="string" 
+    editable="true" 
+    emphasize="false"    
+/>
+
+<carrier
+    short="carrier name" 
+    full="carrier used for the connection" 
+    values="http name_ser local tcp fast_tcp mcast udp text text_ack bayer human portmonitor priority rossrv shmem tcpros xmlrp"  
+    uom="" 
+    type="string" 
+    editable="true" 
+    emphasize="false"    
+/>
