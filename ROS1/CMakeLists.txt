@@ -40,8 +40,7 @@ set(YARP_MINIMUM_REQUIRED_VERSION 3.0.102)
 
 find_package(blocktestcore 2.3.0 REQUIRED)
 find_package(YCM REQUIRED)
-find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
+find_package(ros REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
