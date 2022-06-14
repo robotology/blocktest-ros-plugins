@@ -14,6 +14,9 @@
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
 
+#include <geometry_msgs/msg/twist.hpp>
+#include "std_msgs/msg/string.hpp"
+
 using namespace BlockTestCore;
 
 namespace RosAction
