@@ -31,7 +31,8 @@ class ActionTopicWrite : public Action	//, public ros::Node
 	std::string data_{""};
 
 	ros::NodeHandle nodeHandler_;
-	ros::Publisher publisher_;
+	ros::Publisher publisherString_;
+	ros::Publisher publisherTwist_;
 
 	ACTIONREGISTER_DEC_TYPE(ActionTopicWrite)
 };

@@ -11,6 +11,7 @@
 
 #include "actionTopicWrite.h"
 
+#include "geometry_msgs/Twist.h"
 #include "json.hpp"
 #include "ros1ActionDepotStart.h"
 #include "std_msgs/String.h"
@@ -29,8 +30,8 @@ void ActionTopicWrite::beforeExecute()
 {
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::data, data_);
-	publisher_ = nodeHandler_.advertise<std_msgs::String>(topic_, 1000);
 }
+
 
 execution ActionTopicWrite::execute(const TestRepetitions&)
 {
@@ -41,16 +42,16 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 
 		if (j.contains(rossyntax::dataString))
 		{
+			publisherString_ = nodeHandler_.advertise<std_msgs::String>(topic_, 1000);
 			std::string tmpData = j.at(rossyntax::dataString).value("data", "xxx");
 			std_msgs::String msg;
 			msg.data = tmpData.c_str();
-			publisher_.publish(msg);
+			publisherString_.publish(msg);
 			ros::spinOnce();
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
-			// auto publisher = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
-			// auto message = geometry_msgs::msg::Twist();
+			publisherTwist_ = nodeHandler_.advertise<geometry_msgs::Twist>(topic_, 1000);
 			float x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
 			float y = j.at(rossyntax::dataTypeGeometryTwist).value("y", 0);
 			float z = j.at(rossyntax::dataTypeGeometryTwist).value("z", 0);
@@ -58,14 +59,15 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 			float ya = j.at(rossyntax::dataTypeGeometryTwist).value("ya", 0);
 			float za = j.at(rossyntax::dataTypeGeometryTwist).value("za", 0);
 
-			/*message.angular.x = xa;
-			message.angular.y = ya;
-			message.angular.z = za;
-			message.linear.x = x;
-			message.linear.y = y;
-			message.linear.z = z;
-			publisher->publish(message);
-			publisher.reset();*/
+			geometry_msgs::Twist msg;
+			msg.angular.x = xa;
+			msg.angular.y = ya;
+			msg.angular.z = za;
+			msg.linear.x = x;
+			msg.linear.y = y;
+			msg.linear.z = z;
+			publisherTwist_.publish(msg);
+			ros::spinOnce();
 		}
 	}
 	catch (json::parse_error& e)
