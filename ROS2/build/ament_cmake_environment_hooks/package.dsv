@@ -1,4 +1,4 @@
-source;share/blocktestrosplugins/local_setup.bash
-source;share/blocktestrosplugins/local_setup.dsv
-source;share/blocktestrosplugins/local_setup.sh
-source;share/blocktestrosplugins/local_setup.zsh
+source;share/blocktestros2plugins/local_setup.bash
+source;share/blocktestros2plugins/local_setup.dsv
+source;share/blocktestros2plugins/local_setup.sh
+source;share/blocktestros2plugins/local_setup.zsh
