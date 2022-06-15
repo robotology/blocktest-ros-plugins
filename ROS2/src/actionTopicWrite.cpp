@@ -26,6 +26,12 @@ ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, c
 
 void ActionTopicWrite::beforeExecute()
 {
+	if (!addNode_)
+	{
+		std::shared_ptr<rclcpp::Node> parent = shared_from_this();
+		executor_.add_node(parent);
+		addNode_ = true;
+	}
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::data, data_);
 }
@@ -73,5 +79,8 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 		TXLOG(Severity::error) << "Parsing json:" << e.what() << " data:" << data_ << std::endl;
 		return execution::continueexecution;
 	}
+
+	executor_.spin_once();
+
 	return execution::continueexecution;
 }

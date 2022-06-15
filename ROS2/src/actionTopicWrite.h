@@ -31,6 +31,9 @@ class ActionTopicWrite : public Action, public rclcpp::Node
    protected:
 	std::string topic_{""};
 	std::string data_{""};
+	bool addNode_{false};
+
+	rclcpp::executors::MultiThreadedExecutor executor_;
 
 	ACTIONREGISTER_DEC_TYPE(ActionTopicWrite)
 };

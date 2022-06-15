@@ -33,55 +33,58 @@ ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, con
 
 void ActionTopicRead::beforeExecute()
 {
-	getCommandAttribute(rossyntax::topic, topic_);
-	getCommandAttribute(rossyntax::expected, expected_);
-	std::shared_ptr<rclcpp::Node> parent = shared_from_this();
-	executor_.add_node(parent);
-
-	try
+	if (!addNode_)
 	{
-		json j = json::parse(expected_);
+		std::shared_ptr<rclcpp::Node> parent = shared_from_this();
+		executor_.add_node(parent);
+		addNode_ = true;
 
-		if (j.contains(rossyntax::dataString))
+		getCommandAttribute(rossyntax::topic, topic_);
+		getCommandAttribute(rossyntax::expected, expected_);
+
+		try
 		{
-			if (subscription_std_msgs_String_ == nullptr)
+			json j = json::parse(expected_);
+
+			if (j.contains(rossyntax::dataString))
 			{
-				subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv1, this, _1));
-				TXLOG(Severity::debug) << "Subscribe to msg type:string" << std::endl;
+				if (subscription_std_msgs_String_ == nullptr)
+				{
+					subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv1, this, _1));
+					TXLOG(Severity::debug) << "Subscribe to msg type:string" << std::endl;
+				}
+			}
+			else if (j.contains(rossyntax::dataTypeGeometryTwist))
+			{
+				if (subscription_geometry_msgs_Twist_ == nullptr)
+				{
+					subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv2, this, _1));
+					TXLOG(Severity::debug) << "Subscribe to msg type:geometry_twist" << std::endl;
+				}
+			}
+			else
+			{
+				TXLOG(Severity::error) << "Not supported data type" << std::endl;
 			}
 		}
-		else if (j.contains(rossyntax::dataTypeGeometryTwist))
+		catch (json::parse_error& e)
 		{
-			if (subscription_geometry_msgs_Twist_ == nullptr)
-			{
-				subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv2, this, _1));
-				TXLOG(Severity::debug) << "Subscribe to msg type:geometry_twist" << std::endl;
-			}
+			TXLOG(Severity::error) << "Parsing json:" << e.what() << " expected:" << expected_ << std::endl;
 		}
-		else
-		{
-			TXLOG(Severity::error) << "Not supported data type" << std::endl;
-		}
-	}
-	catch (json::parse_error& e)
-	{
-		TXLOG(Severity::error) << "Parsing json:" << e.what() << " expected:" << expected_ << std::endl;
 	}
 }
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	TXLOG(Severity::debug) << "Spin" << std::endl;
 	std::shared_ptr<rclcpp::Node> parent = shared_from_this();
 	std::chrono::duration<int64_t> timeout(std::chrono::seconds(5));
 	auto startTime = std::chrono::system_clock::now();
 
 	executor_.spin();
-	TXLOG(Severity::debug) << "Spin end" << std::endl;
 
 	if (received_)
 	{
-		TXLOG(Severity::debug) << "Received" << std::endl;
+		TXLOG(Severity::debug) << "Received msg" << std::endl;
 	}
 	else
 	{
