@@ -44,7 +44,6 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 			std::string tmpData = j.at(rossyntax::dataString).value("data", "xxx");
 			message.data = tmpData;
 			publisherString->publish(message);
-			publisherString.reset();
 			TXLOG(Severity::debug) << "Publish string:" << tmpData << " topic:" << topic_ << std::endl;
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
@@ -65,7 +64,6 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 			message.linear.y = y;
 			message.linear.z = z;
 			publisherTwist->publish(message);
-			publisherTwist.reset();
 			TXLOG(Severity::debug) << "Publish twist"
 								   << " topic:" << topic_ << std::endl;
 		}

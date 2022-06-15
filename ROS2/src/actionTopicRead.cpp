@@ -69,31 +69,22 @@ void ActionTopicRead::beforeExecute()
 	}
 }
 
-
-
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	TXLOG(Severity::debug) << "Step begin" << std::endl;
+	TXLOG(Severity::debug) << "Spin" << std::endl;
 	std::shared_ptr<rclcpp::Node> parent = shared_from_this();
 	std::chrono::duration<int64_t> timeout(std::chrono::seconds(5));
 	auto startTime = std::chrono::system_clock::now();
 
-	//for (int t = 0; t < 500;++t)
+	executor_.spin();
+	TXLOG(Severity::debug) << "Spin end" << std::endl;
+
+	if (received_)
 	{
-		executor_.spin();
-		{
-			if (received_)
-			{
-				TXLOG(Severity::debug) << "Received" << std::endl;
-				received_ = false;
-				return execution::continueexecution;
-			}
-		}
-		std::this_thread::sleep_for(10ms);
+		TXLOG(Severity::debug) << "Received" << std::endl;
 	}
-	if (!received_)
+	else
 	{
-		TXLOG(Severity::error) << "Read timeout:" << std::endl;
 		std::stringstream logStream;
 		logStream << "Event not received: "
 				  << " topic:" << topic_;
@@ -103,68 +94,7 @@ execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 	return execution::continueexecution;
 }
 
-
-/*
-execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
-{
-		// auto future = std::async(std::launch::async, []() {
-	// std::this_thread::sleep_for(std::chrono::seconds(5));
-	//});
-	TXLOG(Severity::debug) << "Step begin" << std::endl;
-	std::shared_ptr<rclcpp::Node> parent = shared_from_this();
-	std::chrono::duration<int64_t> timeout(std::chrono::seconds(1));
-	auto startTime = std::chrono::system_clock::now();
-
-	// rclcpp::spin_until_future_complete(parent,future) ;
-	// rclcpp::spin(shared_from_this());
-	executor_.spin_node_once(parent, std::chrono::seconds(1));
-	{
-		if (startTime + timeout < std::chrono::system_clock::now())
-		{
-			TXLOG(Severity::error) << "Read timeout:" << std::endl;
-			std::stringstream logStream;
-			logStream << "Event not received: "
-					  << " topic:" << topic_;
-			addProblem(testrepetition, Severity::error, logStream.str(), true);
-		}
-	}
-	TXLOG(Severity::debug) << "Step end" << std::endl;
-
-	return execution::continueexecution;
-}
-*/
-/*
-execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
-{
-	TXLOG(Severity::debug) << "Step begin" << std::endl;
-	std::shared_ptr<rclcpp::Node> parent = shared_from_this();
-	std::chrono::duration<int64_t> timeout(std::chrono::seconds(5));
-	auto startTime = std::chrono::system_clock::now();
-
-	for (int t = 0; t < 500;++t)
-	{
-		executor_.spin_node_some(parent);
-		{
-			if (received_)
-			{
-				TXLOG(Severity::debug) << "Received" << std::endl;
-				return execution::continueexecution;
-			}
-		}
-		std::this_thread::sleep_for(10ms);
-	}
-	if (!received_)
-	{
-		TXLOG(Severity::error) << "Read timeout:" << std::endl;
-		std::stringstream logStream;
-		logStream << "Event not received: "
-				  << " topic:" << topic_;
-		addProblem(testrepetition, Severity::error, logStream.str(), true);
-	}
-	return execution::continueexecution;
-}
-*/
-void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg) const
+void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg)
 {
 	json j = json::parse(expected_);
 	std::string expectedData = j.at(rossyntax::dataString).value("data", "xxx");
@@ -177,9 +107,10 @@ void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr m
 		addProblem({0, 0}, Severity::error, logStream.str(), true);
 	}
 	TXLOG(Severity::debug) << "Callback receive std_msgs::msg::String:" << msg->data << std::endl;
+	executor_.cancel();
 }
 
-void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg) const
+void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg)
 {
 	json j = json::parse(expected_);
 	float x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
@@ -200,6 +131,7 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 	}
 
 	TXLOG(Severity::debug) << "Callback receive geometry_msgs::msg::Twist:" << std::endl;
+	executor_.cancel();
 }
 
 ActionTopicRead::~ActionTopicRead()

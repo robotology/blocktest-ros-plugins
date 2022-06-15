@@ -13,6 +13,6 @@
 
 	<!-- Tests -->
 	<test file="write.xml" repetitions="20" repetitionsfortime="" code="write" parallel="true" />
-	<test file="read.xml" repetitions="10" repetitionsfortime="" code="read" parallel="true" />
+	<test file="read.xml" repetitions="1" repetitionsfortime="" code="read" parallel="true" />
 
 </testlist>

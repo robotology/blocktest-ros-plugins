@@ -36,8 +36,8 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	std::string expected_{""};
 	mutable bool received_{false};
 
-	void callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg) const;
-	void callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg) const;
+	void callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg);
+	void callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
 
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_{nullptr};
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_{nullptr};
