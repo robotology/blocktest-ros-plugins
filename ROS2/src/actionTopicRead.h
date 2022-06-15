@@ -14,6 +14,7 @@
 #include <condition_variable>
 #include <geometry_msgs/msg/twist.hpp>
 #include <mutex>
+#include <atomic>
 
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
@@ -34,7 +35,10 @@ class ActionTopicRead : public Action, public rclcpp::Node
    protected:
 	std::string topic_{""};
 	std::string expected_{""};
-	bool received_{false};
+	int receiveTimeout_{1000};
+	std::unique_ptr<std::thread> threadTimeout_;
+	void timeout();
+	std::atomic<bool> received_{false};
 	bool addNode_{false};
 
 	void callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg);

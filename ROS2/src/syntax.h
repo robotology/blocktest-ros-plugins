@@ -16,6 +16,7 @@ constexpr char data[] = {"data"};
 constexpr char topic[] = {"topic"};
 constexpr char datatype[] = {"datatype"};
 constexpr char expected[] = {"expected"};
+constexpr char receiveTimeout[] = {"receiverimeout"};
 
 constexpr char dataTypeGeometryTwist[] = "geometry_msgs_Twist";
 constexpr char dataString[] = "std_msg_String";

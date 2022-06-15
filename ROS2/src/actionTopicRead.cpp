@@ -33,6 +33,8 @@ ActionTopicRead::ActionTopicRead(const CommandAttributes& commandAttributes, con
 
 void ActionTopicRead::beforeExecute()
 {
+	received_ = false;
+
 	if (!addNode_)
 	{
 		std::shared_ptr<rclcpp::Node> parent = shared_from_this();
@@ -41,6 +43,7 @@ void ActionTopicRead::beforeExecute()
 
 		getCommandAttribute(rossyntax::topic, topic_);
 		getCommandAttribute(rossyntax::expected, expected_);
+		getCommandAttribute(rossyntax::receiveTimeout, receiveTimeout_);
 
 		try
 		{
@@ -76,12 +79,9 @@ void ActionTopicRead::beforeExecute()
 
 execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 {
-	std::shared_ptr<rclcpp::Node> parent = shared_from_this();
-	std::chrono::duration<int64_t> timeout(std::chrono::seconds(5));
-	auto startTime = std::chrono::system_clock::now();
+	threadTimeout_ = std::make_unique<std::thread>(&ActionTopicRead::timeout, this);
 
 	executor_.spin();
-
 	if (received_)
 	{
 		TXLOG(Severity::debug) << "Received msg" << std::endl;
@@ -93,7 +93,7 @@ execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 				  << " topic:" << topic_;
 		addProblem(testrepetition, Severity::error, logStream.str(), true);
 	}
-	received_ = false;
+	threadTimeout_->join();
 	return execution::continueexecution;
 }
 
@@ -141,4 +141,19 @@ ActionTopicRead::~ActionTopicRead()
 {
 	subscription_std_msgs_String_ = nullptr;
 	subscription_geometry_msgs_Twist_ = nullptr;
+}
+
+void ActionTopicRead::timeout()
+{
+	auto starttime = std::chrono::system_clock::now();
+	while (!received_)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+		auto currenttime = std::chrono::system_clock::now();
+		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currenttime - starttime).count();
+		if (elapsed > receiveTimeout_)
+			break;
+	}
+	executor_.cancel();
 }
