@@ -12,7 +12,7 @@ include(FetchContent)
 include(GNUInstallDirs)
 #Module creation
 
-project(blocktestrosplugins
+project(blocktestros2plugins
         LANGUAGES C CXX
         VERSION 1.1.2)
 
