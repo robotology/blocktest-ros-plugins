@@ -26,14 +26,19 @@ ActionTopicWrite::ActionTopicWrite(const CommandAttributes& commandAttributes, c
 
 void ActionTopicWrite::beforeExecute()
 {
+	getCommandAttribute(rossyntax::topic, topic_);
+	getCommandAttribute(rossyntax::data, data_);
 	if (!addNode_)
 	{
 		std::shared_ptr<rclcpp::Node> parent = shared_from_this();
 		executor_.add_node(parent);
 		addNode_ = true;
+		json j = json::parse(data_);
+		if (j.contains(rossyntax::dataTypeGeometryTwist))
+			publisherTwist_ = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
+		else if (j.contains(rossyntax::dataString))
+			publisherString_ = create_publisher<std_msgs::msg::String>(topic_, 10);
 	}
-	getCommandAttribute(rossyntax::topic, topic_);
-	getCommandAttribute(rossyntax::data, data_);
 }
 
 execution ActionTopicWrite::execute(const TestRepetitions&)
@@ -45,16 +50,14 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 
 		if (j.contains(rossyntax::dataString))
 		{
-			auto publisherString = create_publisher<std_msgs::msg::String>(topic_, 10);
 			auto message = std_msgs::msg::String();
 			std::string tmpData = j.at(rossyntax::dataString).value("data", "xxx");
 			message.data = tmpData;
-			publisherString->publish(message);
+			publisherString_->publish(message);
 			TXLOG(Severity::debug) << "Publish string:" << tmpData << " topic:" << topic_ << std::endl;
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
-			auto publisherTwist = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
 			auto message = geometry_msgs::msg::Twist();
 			float x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
 			float y = j.at(rossyntax::dataTypeGeometryTwist).value("y", 0);
@@ -69,7 +72,7 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 			message.linear.x = x;
 			message.linear.y = y;
 			message.linear.z = z;
-			publisherTwist->publish(message);
+			publisherTwist_->publish(message);
 			TXLOG(Severity::debug) << "Publish twist"
 								   << " topic:" << topic_ << std::endl;
 		}
@@ -80,7 +83,7 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 		return execution::continueexecution;
 	}
 
-	executor_.spin_once();
+	//executor_.spin_once();
 
 	return execution::continueexecution;
 }

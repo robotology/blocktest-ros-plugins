@@ -11,10 +11,10 @@
 
 #pragma once
 
+#include <geometry_msgs/msg/twist.hpp>
+
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
-
-#include <geometry_msgs/msg/twist.hpp>
 #include "std_msgs/msg/string.hpp"
 
 using namespace BlockTestCore;
@@ -32,6 +32,9 @@ class ActionTopicWrite : public Action, public rclcpp::Node
 	std::string topic_{""};
 	std::string data_{""};
 	bool addNode_{false};
+
+	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisherTwist_;
+	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisherString_;
 
 	rclcpp::executors::MultiThreadedExecutor executor_;
 
