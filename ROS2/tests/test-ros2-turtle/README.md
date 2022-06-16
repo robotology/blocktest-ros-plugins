@@ -16,8 +16,8 @@ This test is designed for testing ROS2 applications.
 # 3. Execution
 ```bash
 cd <your-blocktest-clonedir>/blocktest/install/bin
-./blocktestrunner test.xml tests/test-ros-turtle
+./blocktestrunner test.xml tests/test-ros2-turtle
 ```
 
 # 4. Test description
-The test will send messages through the ROS2 topic message system to move the turtle.
+The test will send messages through the ROS2 topic message system to move the turtle used topic=`/turtle1/cmd_vel`.
