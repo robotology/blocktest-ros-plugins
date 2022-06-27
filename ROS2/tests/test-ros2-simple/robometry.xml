@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<testlist repetitions="1">
+
+	<!-- Prerequisites -->
+	<settings realrobot="false" onlysimcommands="yarpcheckrobotisvertical checkRobot yarpreset applyForce" neverexecutecommands="" logseverity="debug" loggingtime="0.001" tablename="tables/main.tab" waitcommand="wait" nowcommand="now" loggingcommand="infologger"  relativetime="true" unixtime="false"/>/>
+
+	<library enabled="true" path="genericactiondepot/genericactiondepot" name="genericactiondepot" note="System generic actions library" />
+	<library enabled="true" path="blocktestros2plugins/libblocktestros2plugins" name="rosactiondepot" note="Ros actions library" />
+
+	<librarysettings enabled="true" name="genericactiondepot" />
+	<librarysettings enabled="true" name="rosactiondepot" wrappername="" robotname="" netclock="false" />
+
+
+	<!-- Tests -->
+	<test file="robometry-jointstate.xml" repetitions="1" repetitionsfortime="" code="robometry-js" parallel="true" />
+	<test file="write-jointstate.xml" repetitions="1" repetitionsfortime="" code="write-js" parallel="true" />
+
+</testlist>

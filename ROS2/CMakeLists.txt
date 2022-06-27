@@ -38,7 +38,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 #Thrift for clock
 set(YARP_MINIMUM_REQUIRED_VERSION 3.0.102)
 
-option(ENABLE_ROBOMETRY "Enable the robometry logging" ON)
+option(ENABLE_ROBOMETRY "Enable the robometry blocks" ON)
 
 find_package(blocktestcore 2.3.0 REQUIRED)
 find_package(YCM REQUIRED)
@@ -73,14 +73,12 @@ add_install_rpath_support(BIN_DIRS "${CMAKE_INSTALL_FULL_BINDIR}"
                           USE_LINK_PATH)
 
 
-set(SOURCE
-        ${SOURCE}
+list(APPEND SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.cpp
 )
-set(HEADERS
-        ${HEADERS}
+list(APPEND HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/rosActionDepotStart.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicWrite.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRead.h
@@ -88,15 +86,16 @@ set(HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/json.hpp
 )
 
-add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
 list(APPEND PUBLIC_DEPS blocktestcore::blocktestcore)
 
 if(ENABLE_ROBOMETRY)
   list(APPEND PUBLIC_DEPS robometry::robometry Eigen3::Eigen)
-  target_compile_definitions(${PROJECT_NAME} PUBLIC -DENABLE_ROBOMETRY)
+  list(APPEND SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRobometry.cpp)
+  list(APPEND HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/actionTopicRobometry.h)
 endif()
+
+add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 target_link_libraries(${PROJECT_NAME} ${PUBLIC_DEPS})
 ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs geometry_msgs sensor_msgs)

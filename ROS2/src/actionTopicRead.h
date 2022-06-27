@@ -42,9 +42,9 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	std::atomic<bool> received_{false};
 	bool addNode_{false};
 
-	void callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg);
-	void callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
-	void callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg);
+	virtual void callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg);
+	virtual void callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
+	virtual void callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg);
 
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_{nullptr};
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_{nullptr};

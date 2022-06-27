@@ -17,6 +17,7 @@ constexpr char topic[] = {"topic"};
 constexpr char datatype[] = {"datatype"};
 constexpr char expected[] = {"expected"};
 constexpr char receiveTimeout[] = {"receiverimeout"};
+constexpr char robometryjson[] = {"robometryjson"};
 
 constexpr char dataTypeGeometryTwist[] = "geometry_msgs_Twist";
 constexpr char dataTypeString[] = "std_msg_String";
@@ -28,4 +29,5 @@ namespace rosactions
 {
 constexpr char rostopicwrite[] = {"rostopicwrite"};
 constexpr char rostopicread[] = {"rostopicread"};
+constexpr char rostopicrobometry[] = {"rostopicrobometry"};
 };	// namespace rosactions
