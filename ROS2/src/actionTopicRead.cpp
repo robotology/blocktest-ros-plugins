@@ -49,11 +49,11 @@ void ActionTopicRead::beforeExecute()
 		{
 			json j = json::parse(expected_);
 
-			if (j.contains(rossyntax::dataString))
+			if (j.contains(rossyntax::dataTypeString))
 			{
 				if (subscription_std_msgs_String_ == nullptr)
 				{
-					subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv1, this, _1));
+					subscription_std_msgs_String_ = this->create_subscription<std_msgs::msg::String>(topic_, 10, std::bind(&ActionTopicRead::callbackRcvString, this, _1));
 					TXLOG(Severity::debug) << "Subscribe to msg type:string" << std::endl;
 				}
 			}
@@ -61,8 +61,16 @@ void ActionTopicRead::beforeExecute()
 			{
 				if (subscription_geometry_msgs_Twist_ == nullptr)
 				{
-					subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcv2, this, _1));
+					subscription_geometry_msgs_Twist_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_, 10, std::bind(&ActionTopicRead::callbackRcvTwist, this, _1));
 					TXLOG(Severity::debug) << "Subscribe to msg type:geometry_twist" << std::endl;
+				}
+			}
+			else if (j.contains(rossyntax::dataTypeJointState))
+			{
+				if (subscription_msgs_JointState_ == nullptr)
+				{
+					subscription_msgs_JointState_ = this->create_subscription<sensor_msgs::msg::JointState>(topic_, 10, std::bind(&ActionTopicRead::callbackRcvJointState, this, _1));
+					TXLOG(Severity::debug) << "Subscribe to msg type:joint_state" << std::endl;
 				}
 			}
 			else
@@ -97,10 +105,10 @@ execution ActionTopicRead::execute(const TestRepetitions& testrepetition)
 	return execution::continueexecution;
 }
 
-void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg)
+void ActionTopicRead::callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg)
 {
 	json j = json::parse(expected_);
-	std::string expectedData = j.at(rossyntax::dataString).value("data", "xxx");
+	std::string expectedData = j.at(rossyntax::dataTypeString).value("data", "xxx");
 
 	received_ = true;
 	if (msg->data != expectedData)
@@ -113,7 +121,7 @@ void ActionTopicRead::callbackRcv1(const std_msgs::msg::String::ConstSharedPtr m
 	executor_.cancel();
 }
 
-void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg)
+void ActionTopicRead::callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg)
 {
 	json j = json::parse(expected_);
 	float x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
@@ -124,7 +132,6 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 	float za = j.at(rossyntax::dataTypeGeometryTwist).value("za", 0);
 
 	received_ = true;
-
 	if (msg->angular.x != xa || msg->angular.y != ya || msg->angular.z != za || msg->linear.x != x || msg->linear.y != y || msg->linear.z != z)
 	{
 		std::stringstream logStream;
@@ -137,10 +144,49 @@ void ActionTopicRead::callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedP
 	executor_.cancel();
 }
 
+void ActionTopicRead::callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg)
+{
+	json j = json::parse(expected_);
+	std::string name = j.at(rossyntax::dataTypeJointState).value("name", "xxx");
+	double position = j.at(rossyntax::dataTypeJointState).value("position", 0);
+	double velocity = j.at(rossyntax::dataTypeJointState).value("velocity", 0);
+	double effort = j.at(rossyntax::dataTypeJointState).value("effort", 0);
+
+	bool flag = false;
+	for (size_t t = 0; t < msg->name.size(); ++t)
+	{
+		if (msg->name[t] == name)
+		{
+			flag = true;
+			if (msg->position[t] != position || msg->velocity[t] != velocity || msg->effort[t] != effort)
+			{
+				std::stringstream logStream;
+				logStream << "Read unexpected value: "
+						  << " topic:" << topic_;
+				addProblem({0, 0}, Severity::error, logStream.str(), false);
+			}
+			break;
+		}
+	}
+
+	if (!flag)
+	{
+		std::stringstream logStream;
+		logStream << "Joint name not found in msg: "
+				  << " topic:" << topic_ << " name:" << name;
+		addProblem({0, 0}, Severity::error, logStream.str(), false);
+	}
+
+	received_ = true;
+	TXLOG(Severity::debug) << "Callback receive sensor_msgs::msg::JointState:" << std::endl;
+	executor_.cancel();
+}
+
 ActionTopicRead::~ActionTopicRead()
 {
 	subscription_std_msgs_String_ = nullptr;
 	subscription_geometry_msgs_Twist_ = nullptr;
+	subscription_msgs_JointState_ = nullptr;
 }
 
 void ActionTopicRead::timeout()

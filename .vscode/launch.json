@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "/home/triccyx/Documents/install/bin/blocktestrunner",
-            "args": ["test.xml","tests/test-ros2-turtle"],
+            "args": ["simple001.xml","tests/test-ros2-simple"],
             "stopAtEntry": false,
             "cwd": "/home/triccyx/Documents/install/bin",
             "environment": [],

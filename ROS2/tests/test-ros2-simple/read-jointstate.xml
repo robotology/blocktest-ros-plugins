@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<testbody>
+	<info note='Subscribe on OS topic.' shortnote='' version='1.0' />
+	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
+	<settings wait='0' />
+	<!-- receiverimeout in msec -->
+	<command library='ros' name='rostopicread' topic='mytopic' expected='{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}' receiverimeout="10000"  repetitions='2' wait='1' reporterror='true' />
+
+</testbody>

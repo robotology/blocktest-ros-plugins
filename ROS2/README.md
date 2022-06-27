@@ -73,6 +73,14 @@ make -j 4
 make install
 ```
 
+**Note**
+You can add to ~/.bashrc
+```
+export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:~/Documents/install
+source /opt/ros/foxy/setup.bash
+```
+
+
 # 3. Available commands
 These action blocks are contained in blocktest-ros2-plugin.
 
@@ -88,6 +96,9 @@ These action blocks are contained in blocktest-ros2-plugin.
     - geometry_msgs::msg::Twist  
       ```{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}```
 
+    - sensor_msgs::msg::JointState
+    ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
+    
   Example:  
   ```xml
         <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' receiverimeout="10000" repetitions='1' wait='0' reporterror='true'/>

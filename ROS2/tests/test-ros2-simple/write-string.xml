@@ -6,6 +6,4 @@
 
 	<command library='general' name='wait' seconds='2' repetitions='1' wait='1' reporterror='true' />
 	<command library='ros' name='rostopicwrite' topic='mytopic' data='{"std_msg_String":{"data":"hello"}}' repetitions='10' wait='1' reporterror='true' />
-	
-
 </testbody>

@@ -15,10 +15,11 @@
 #include <condition_variable>
 #include <geometry_msgs/msg/twist.hpp>
 #include <mutex>
+#include <sensor_msgs/msg/joint_state.hpp>
+#include <std_msgs/msg/string.hpp>
 
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
 
 using namespace BlockTestCore;
 
@@ -41,11 +42,13 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	std::atomic<bool> received_{false};
 	bool addNode_{false};
 
-	void callbackRcv1(const std_msgs::msg::String::ConstSharedPtr msg);
-	void callbackRcv2(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
+	void callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg);
+	void callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
+	void callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg);
 
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_{nullptr};
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_{nullptr};
+	rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr subscription_msgs_JointState_{nullptr};
 
 	rclcpp::executors::MultiThreadedExecutor executor_;
 

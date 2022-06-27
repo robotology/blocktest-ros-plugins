@@ -12,10 +12,11 @@
 #pragma once
 
 #include <geometry_msgs/msg/twist.hpp>
+#include <sensor_msgs/msg/joint_state.hpp>
+#include <std_msgs/msg/string.hpp>
 
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
 
 using namespace BlockTestCore;
 
@@ -35,6 +36,7 @@ class ActionTopicWrite : public Action, public rclcpp::Node
 
 	rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisherTwist_;
 	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisherString_;
+	rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr publisherJointState_;
 
 	rclcpp::executors::MultiThreadedExecutor executor_;
 
