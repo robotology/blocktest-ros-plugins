@@ -5,7 +5,7 @@
 #                                                                              #
 ################################################################################
 
-# @author Luca Tricerri <luca.tricerri@iit.it>  
+# @author Luca Tricerri <luca.tricerri@iit.it>
 
 cmake_minimum_required(VERSION 3.5)
 include(FetchContent)
@@ -38,6 +38,8 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 #Thrift for clock
 set(YARP_MINIMUM_REQUIRED_VERSION 3.0.102)
 
+option(ENABLE_ROBOMETRY "Enable the robometry logging" ON)
+
 find_package(blocktestcore 2.3.0 REQUIRED)
 find_package(YCM REQUIRED)
 find_package(ament_cmake REQUIRED)
@@ -45,6 +47,11 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+
+if(ENABLE_ROBOMETRY)
+  find_package(Eigen3 REQUIRED)
+  find_package(robometry REQUIRED)
+endif()
 
 #JSON
 #FetchContent_Declare(
@@ -83,8 +90,15 @@ set(HEADERS
 
 add_library(${PROJECT_NAME} MODULE ${SOURCE} ${HEADER})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(${PROJECT_NAME} blocktestcore::blocktestcore
-                                      )
+
+list(APPEND PUBLIC_DEPS blocktestcore::blocktestcore)
+
+if(ENABLE_ROBOMETRY)
+  list(APPEND PUBLIC_DEPS robometry::robometry Eigen3::Eigen)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC -DENABLE_ROBOMETRY)
+endif()
+
+target_link_libraries(${PROJECT_NAME} ${PUBLIC_DEPS})
 ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs geometry_msgs sensor_msgs)
 #xml template folder
 if(WIN32)
