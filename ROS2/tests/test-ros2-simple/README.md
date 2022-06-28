@@ -20,7 +20,7 @@ cd <your-blocktest-clonedir>/blocktest/install/bin
 the test will send and receive messages through the ROS2 topic message system used topic=`mytopic`. 
 ```bash
 cd <your-blocktest-clonedir>/blocktest/install/bin
-./blocktestrunner simple001.xml tests/test-ros2-simple
+./blocktestrunner fast.xml tests/test-ros2-simple
 ```
 
 - Fail receive
