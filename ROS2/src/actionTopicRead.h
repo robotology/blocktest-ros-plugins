@@ -31,7 +31,7 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	ActionTopicRead(const CommandAttributes& commandAttributes, const std::string& testCode);
 	execution execute(const TestRepetitions& testrepetition) override;
 	void beforeExecute() override;
-	~ActionTopicRead();
+	virtual ~ActionTopicRead();
 
    protected:
 	std::string topic_{""};
