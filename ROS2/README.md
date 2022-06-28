@@ -101,7 +101,7 @@ These action blocks are contained in blocktest-ros2-plugin.
     
   Example:  
   ```xml
-        <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' receiverimeout="10000" repetitions='1' wait='0' reporterror='true'/>
+        <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' receivertimeout="10000" repetitions='1' wait='0' reporterror='true'/>
   ```
 Note that the `receivedtimeout` in in millisecoonds.
 

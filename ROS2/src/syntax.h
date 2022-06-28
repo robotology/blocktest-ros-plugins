@@ -16,7 +16,7 @@ constexpr char data[] = {"data"};
 constexpr char topic[] = {"topic"};
 constexpr char datatype[] = {"datatype"};
 constexpr char expected[] = {"expected"};
-constexpr char receiveTimeout[] = {"receiverimeout"};
+constexpr char receiveTimeout[] = {"receivertimeout"};
 constexpr char robometryjson[] = {"robometryjson"};
 
 constexpr char dataTypeGeometryTwist[] = "geometry_msgs_Twist";
