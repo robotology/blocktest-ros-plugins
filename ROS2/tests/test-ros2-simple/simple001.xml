@@ -22,6 +22,7 @@
 
 	<test file="nop.xml" repetitions="1" repetitionsfortime="" code="nop" parallel="false" />
 
-	
+	<test file="read-twist.xml" repetitions="1" repetitionsfortime="" code="read-twist" parallel="true" />
+	<test file="write-twist.xml" repetitions="1" repetitionsfortime="" code="write-twist" parallel="true" />
 
 </testlist>

@@ -12,6 +12,7 @@
 	
 
 	<!-- Tests -->
-	<test file="read-string.xml" repetitions="1" repetitionsfortime="" code="read" parallel="true" />
+	<test file="read-string-fast.xml" repetitions="1" repetitionsfortime="" code="read" parallel="true" />
+	<test file="write-string-fast.xml" repetitions="1" repetitionsfortime="" code="write" parallel="true" />
 
 </testlist>

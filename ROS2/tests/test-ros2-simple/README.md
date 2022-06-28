@@ -8,10 +8,18 @@ This test is designed for testing ROS2 applications.
 - Install ROS2 foxy
 
 # 3. Execution
+
+Base test,
+the test will send and receive messages through the ROS2 topic message system used topic=`mytopic`. 
 ```bash
 cd <your-blocktest-clonedir>/blocktest/install/bin
 ./blocktestrunner simple001.xml tests/test-ros2-simple
 ```
 
-# 4. Test description
-The test will send and receive messages through the ROS2 topic message system used topic=`mytopic`. 
+The following thest will fail,
+the test will try to receive messages through the ROS2 topic message system used topic=`mytopic` but fails. 
+```bash
+cd <your-blocktest-clonedir>/blocktest/install/bin
+./blocktestrunner failreceive.xml tests/test-ros2-simple
+```
+
