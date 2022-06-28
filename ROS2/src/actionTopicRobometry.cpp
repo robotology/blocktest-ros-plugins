@@ -47,12 +47,14 @@ void ActionTopicRobometry::beforeExecute()
 		bufferConfig.description_list = { "" };
 		// FIXME the dimensionality of the message is not handled, the test is sending scalar values
 		bufferConfig.channels = { {"name",{1,1}}, {"position",{1,1}}, {"velocity",{1,1}}, {"effort",{1,1}} };
+		bufferConfig.path = "./";
 		bufferConfig.filename = "robometry_blocktest_data";
 		bufferConfig.n_samples = 100000;
 		bufferConfig.save_period = 120.0;
 		bufferConfig.data_threshold = 300;
-		bufferConfig.save_periodically = true;
+		bufferConfig.save_periodically = false; // FIXME
 		bufferConfig.enable_compression = true;
+		bufferConfig.auto_save = true; // FIXME The destructor is not invoked for some reason
 		bool ok = m_bufferManager.configure(bufferConfig);
 		if (!ok)
 		{
@@ -85,6 +87,7 @@ void ActionTopicRobometry::callbackRcvJointState(const sensor_msgs::msg::JointSt
 		// 	m_bufferManager.push_back({msg->get().name}, "name");
 		// }
 		received_ = true;
+		m_bufferManager.saveToFile();
 	}
 }
 

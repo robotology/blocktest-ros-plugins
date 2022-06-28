@@ -30,7 +30,10 @@ class ActionTopicRobometry : public ActionTopicRead
    public:
 	ActionTopicRobometry(const CommandAttributes& commandAttributes, const std::string& testCode);
 	void beforeExecute() override;
-	~ActionTopicRobometry() = default;
+	~ActionTopicRobometry() {
+		TXLOG(Severity::debug) << "I AM DESTRUCTING ROBOMETRY" << std::endl;
+
+	};
 
    protected:
 
