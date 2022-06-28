@@ -9,13 +9,21 @@ This test is designed for testing ROS2 applications.
 
 # 3. Execution
 
-Base test,
+- Base test,
 the test will send and receive messages through the ROS2 topic message system used topic=`mytopic`. 
 ```bash
 cd <your-blocktest-clonedir>/blocktest/install/bin
 ./blocktestrunner simple001.xml tests/test-ros2-simple
 ```
 
+- Fast test,
+the test will send and receive messages through the ROS2 topic message system used topic=`mytopic`. 
+```bash
+cd <your-blocktest-clonedir>/blocktest/install/bin
+./blocktestrunner simple001.xml tests/test-ros2-simple
+```
+
+- Fail receive
 The following thest will fail,
 the test will try to receive messages through the ROS2 topic message system used topic=`mytopic` but fails. 
 ```bash
