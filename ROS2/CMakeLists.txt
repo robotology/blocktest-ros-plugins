@@ -38,7 +38,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 #Thrift for clock
 set(YARP_MINIMUM_REQUIRED_VERSION 3.0.102)
 
-option(ENABLE_ROBOMETRY "Enable the robometry blocks" ON)
+option(ENABLE_ROBOMETRY "Enable the robometry blocks" OFF)
 
 find_package(blocktestcore 2.3.0 REQUIRED)
 find_package(YCM REQUIRED)

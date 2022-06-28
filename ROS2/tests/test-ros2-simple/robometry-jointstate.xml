@@ -4,6 +4,6 @@
 	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
 	<settings wait='0' />
 	<!-- receivertimeout in msec -->
-	<command library='ros' name='rostopicrobometry' topic='mytopic' robometryjson='/home/ngenesio/robotology/blocktest-ros-plugins/ROS2/tests/test-ros2-simple/test.json' receivertimeout="10000"  repetitions='2' wait='1' reporterror='true' />
+	<command library='ros' name='rostopicrobometry' topic='mytopic' receivertimeout="10000"  repetitions='2' wait='1' reporterror='true' />
 
 </testbody>

@@ -37,7 +37,7 @@ class ActionTopicRobometry : public ActionTopicRead
 	//virtual void callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg);
 	//virtual void callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
 	void callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg) override;
-	std::string robometryJson_;
+	std::string robometryJson_; // Not used yet
 	robometry::BufferManager m_bufferManager;
 	ACTIONREGISTER_DEC_TYPE(ActionTopicRobometry)
 };

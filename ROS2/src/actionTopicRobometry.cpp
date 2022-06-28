@@ -40,11 +40,20 @@ void ActionTopicRobometry::beforeExecute()
 		addNode_ = true;
 
 		getCommandAttribute(rossyntax::topic, topic_);
-		getCommandAttribute(rossyntax::robometryjson, robometryJson_);
 		getCommandAttribute(rossyntax::receiveTimeout, receiveTimeout_);
 		BufferConfig bufferConfig;
-		bool ok = bufferConfigFromJson(bufferConfig, robometryJson_);
-		ok = ok && m_bufferManager.configure(bufferConfig);
+		// In case of using different message type, we use the json configuration
+		bufferConfig.yarp_robot_name = "robot";
+		bufferConfig.description_list = { "" };
+		// FIXME the dimensionality of the message is not handled, the test is sending scalar values
+		bufferConfig.channels = { {"name",{1,1}}, {"position",{1,1}}, {"velocity",{1,1}}, {"effort",{1,1}} };
+		bufferConfig.filename = "robometry_blocktest_data";
+		bufferConfig.n_samples = 100000;
+		bufferConfig.save_period = 120.0;
+		bufferConfig.data_threshold = 300;
+		bufferConfig.save_periodically = true;
+		bufferConfig.enable_compression = true;
+		bool ok = m_bufferManager.configure(bufferConfig);
 		if (!ok)
 		{
 			TXLOG(Severity::error) << "Failed to configure robometry::BufferManager" << std::endl;
@@ -61,7 +70,22 @@ void ActionTopicRobometry::beforeExecute()
 
 void ActionTopicRobometry::callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg)
 {
-	TXLOG(Severity::debug) << "I am reading something......" << std::endl;
+	if(msg.get() != nullptr)
+	{
+		TXLOG(Severity::debug) << "I am reading something......" << std::endl;
+		TXLOG(Severity::debug) << "Sizes: name: " << msg->name.size() << " position: " << msg->position.size()<< " velocity: " << msg->velocity.size() << " effort: " << msg->effort.size() << std::endl;
+		m_bufferManager.push_back(msg->name, "name");
+		m_bufferManager.push_back(msg->position, "position");
+		m_bufferManager.push_back(msg->velocity, "velocity");
+		m_bufferManager.push_back(msg->effort, "effort");
+		// TODO maybe we have to handle in this way
+		// for (size_t t = 0; t < msg->name.size(); ++t)
+		// {
+		// 	TXLOG(Severity::debug) << "name: " << msg->name[t] << " position: " << msg->position[t] << " velocity: " << msg->velocity[t] << " effort: " << msg->effort[t] << std::endl;
+		// 	m_bufferManager.push_back({msg->get().name}, "name");
+		// }
+		received_ = true;
+	}
 }
 
 
