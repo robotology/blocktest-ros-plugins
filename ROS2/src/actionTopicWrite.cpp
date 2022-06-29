@@ -28,6 +28,19 @@ void ActionTopicWrite::beforeExecute()
 {
 	getCommandAttribute(rossyntax::topic, topic_);
 	getCommandAttribute(rossyntax::data, data_);
+	if (!addNode_)
+	{
+		std::shared_ptr<rclcpp::Node> parent = shared_from_this();
+		executor_.add_node(parent);
+		addNode_ = true;
+		json j = json::parse(data_);
+		if (j.contains(rossyntax::dataTypeGeometryTwist))
+			publisherTwist_ = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
+		else if (j.contains(rossyntax::dataTypeString))
+			publisherString_ = create_publisher<std_msgs::msg::String>(topic_, 10);
+		else if (j.contains(rossyntax::dataTypeJointState))
+			publisherJointState_ = create_publisher<sensor_msgs::msg::JointState>(topic_, 10);			
+	}
 }
 
 execution ActionTopicWrite::execute(const TestRepetitions&)
@@ -37,19 +50,16 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 	{
 		j = json::parse(data_);
 
-		if (j.contains(rossyntax::dataString))
+		if (j.contains(rossyntax::dataTypeString))
 		{
-			auto publisherString = create_publisher<std_msgs::msg::String>(topic_, 10);
 			auto message = std_msgs::msg::String();
-			std::string tmpData = j.at(rossyntax::dataString).value("data", "xxx");
+			std::string tmpData = j.at(rossyntax::dataTypeString).value("data", "xxx");
 			message.data = tmpData;
-			publisherString->publish(message);
-			publisherString.reset();
+			publisherString_->publish(message);
 			TXLOG(Severity::debug) << "Publish string:" << tmpData << " topic:" << topic_ << std::endl;
 		}
 		else if (j.contains(rossyntax::dataTypeGeometryTwist))
 		{
-			auto publisherTwist = create_publisher<geometry_msgs::msg::Twist>(topic_, 10);
 			auto message = geometry_msgs::msg::Twist();
 			float x = j.at(rossyntax::dataTypeGeometryTwist).value("x", 0);
 			float y = j.at(rossyntax::dataTypeGeometryTwist).value("y", 0);
@@ -64,9 +74,24 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 			message.linear.x = x;
 			message.linear.y = y;
 			message.linear.z = z;
-			publisherTwist->publish(message);
-			publisherTwist.reset();
+			publisherTwist_->publish(message);
 			TXLOG(Severity::debug) << "Publish twist"
+								   << " topic:" << topic_ << std::endl;
+		}
+		else if (j.contains(rossyntax::dataTypeJointState))
+		{
+			auto message = sensor_msgs::msg::JointState();
+			std::string name = j.at(rossyntax::dataTypeJointState).value("name", "xxx");
+			double position = j.at(rossyntax::dataTypeJointState).value("position", 0);
+			double velocity = j.at(rossyntax::dataTypeJointState).value("velocity", 0);
+			double effort = j.at(rossyntax::dataTypeJointState).value("effort", 0);
+
+			message.name.push_back(name);
+			message.position.push_back(position);
+			message.velocity.push_back(velocity);
+			message.effort.push_back(effort);
+			publisherJointState_->publish(message);
+			TXLOG(Severity::debug) << "Publish jointstate"
 								   << " topic:" << topic_ << std::endl;
 		}
 	}
@@ -75,5 +100,6 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 		TXLOG(Severity::error) << "Parsing json:" << e.what() << " data:" << data_ << std::endl;
 		return execution::continueexecution;
 	}
+
 	return execution::continueexecution;
 }

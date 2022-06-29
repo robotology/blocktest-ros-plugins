@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<testbody>
+	<info note='Publish on OS topic.' shortnote='' version='1.0' />
+	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
+	<settings wait='0' />
+
+	<command library='general' name='wait' seconds='2' repetitions='1' wait='1' reporterror='true' />
+	<command library='ros' name='rostopicwrite' topic='mytopic' data='{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}' repetitions='10' wait='1' reporterror='true' />
+</testbody>

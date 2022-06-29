@@ -1,4 +1,3 @@
-.vscode/
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
@@ -9,7 +8,7 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 *~
-build*/
+/build*/
 *kdev*
 /external/
 /robotology/
