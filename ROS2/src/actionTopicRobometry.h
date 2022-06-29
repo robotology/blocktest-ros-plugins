@@ -30,10 +30,7 @@ class ActionTopicRobometry : public ActionTopicRead
    public:
 	ActionTopicRobometry(const CommandAttributes& commandAttributes, const std::string& testCode);
 	void beforeExecute() override;
-	~ActionTopicRobometry()
-	{
-		TXLOG(Severity::debug) << "I AM DESTRUCTING ROBOMETRY" << std::endl;
-	};
+	void afterExecuteAllRepetitions() override;
 
    protected:
 	// virtual void callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg);

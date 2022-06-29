@@ -51,7 +51,7 @@ void ActionTopicRobometry::beforeExecute()
 		bufferConfig.n_samples = 100000;
 		bufferConfig.save_period = 120.0;
 		bufferConfig.data_threshold = 300;
-		bufferConfig.save_periodically = false;	 // FIXME
+		bufferConfig.save_periodically = true;
 		bufferConfig.enable_compression = true;
 		bufferConfig.auto_save = true;	// FIXME The destructor is not invoked for some reason
 		bool ok = bufferManager_.configure(bufferConfig);
@@ -87,7 +87,11 @@ void ActionTopicRobometry::callbackRcvJointState(const sensor_msgs::msg::JointSt
 		// 	bufferManager_.push_back({msg->get().name}, "name");
 		// }
 		received_ = true;
-		bufferManager_.saveToFile();
 	}
 	executor_.cancel();
+}
+
+void ActionTopicRobometry::afterExecuteAllRepetitions()
+{
+	bufferManager_.saveToFile();
 }
