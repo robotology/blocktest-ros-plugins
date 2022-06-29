@@ -5,5 +5,5 @@
 	<settings wait='0' />
 
 	<command library='general' name='wait' seconds='2' repetitions='1' wait='1' reporterror='true' />
-	<command library='ros' name='rostopicwrite' topic='mytopic' data='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":5,"za":6}}' repetitions='10' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicwrite' topic='mytopic' data='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":5,"za":6}}' repetitions='10' wait='1' reporterror='true' />
 </testbody>

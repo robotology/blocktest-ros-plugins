@@ -4,6 +4,6 @@
 	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
 	<settings wait='0' />
 	<!-- receivertimeout in msec -->
-	<command library='ros' name='rostopicread' topic='mytopic' expected='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":5,"za":6}}' receivertimeout="10000"  repetitions='2' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='mytopic' expected='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":5,"za":6}}' receivertimeout="10000"  repetitions='2' wait='1' reporterror='true' />
 
 </testbody>
