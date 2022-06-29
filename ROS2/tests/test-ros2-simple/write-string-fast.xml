@@ -5,5 +5,5 @@
 	<settings wait='0' />
 
 	<command library='general' name='wait' seconds='2' repetitions='1' wait='0' reporterror='true' />
-	<command library='ros' name='rostopicwrite' topic='mytopic' data='{"std_msg_String":{"data":"hello"}}' repetitions='1000' wait='0' reporterror='true' />
+	<command library='ros2' name='rostopicwrite' topic='mytopic' data='{"std_msg_String":{"data":"hello"}}' repetitions='1000' wait='0' reporterror='true' />
 </testbody>
