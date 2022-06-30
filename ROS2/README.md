@@ -1,19 +1,5 @@
 # 1. blocktest-ros2-plugins
 
-
-- [1. blocktest-ros2-plugins](#1-blocktest-ros2-plugins)
-- [2. Installation](#2-installation)
-  - [2.1. Prerequisite Linux](#21-prerequisite-linux)
-    - [2.1.1. ROS2](#211-ros2)
-    - [2.1.2. Blocktest](#212-blocktest)
-  - [2.2. Installation and compilation](#22-installation-and-compilation)
-- [3. Available commands](#3-available-commands)
-  - [3.1. ROS commands](#31-ros-commands)
-- [4. Troubleshooting](#4-troubleshooting)
-- [5. Debug tools](#5-debug-tools)
-  - [5.1. Subscribe to topics with cmdline](#51-subscribe-to-topics-with-cmdline)
-
-
 Repository containing the ROS2 plugins for blocktest
 
 
