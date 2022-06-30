@@ -36,6 +36,9 @@ sudo apt-get install -y cmake libboost-all-dev
 ### 2.1.2. Blocktest
 See https://github.com/robotology/blocktest
 
+### 2.1.3. Robometry(optional)
+In order to compile `actionTopicRobometry`, install [`robometry`](https://github.com/robotology/robometry) following [these instructions](https://github.com/robotology/robometry#installation-from-sources) and then compile with `ENABLE_ROBOMETRY=ON`.
+
 
 ## 2.2. Installation and compilation
 
@@ -114,12 +117,30 @@ Note that the `receivedtimeout` in in millisecoonds.
 
     - geometry_msgs::msg::Twist  
       ```{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}```
+    
+    - sensor_msgs::msg::JointState
+    ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
 
 Example:
 
 ```xml
     <command name='rostopicwrite' topic='' data='{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}' repetitions='1' wait='0' reporterror='true'/>
 ```
+
+-   **rostopicrobometry**
+
+    Read from a ROS2 topic and dump using [`robometry`](https://github.com/robotology/robometry).
+    ROS2 supported types:
+    
+    - sensor_msgs::msg::JointState
+    ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
+
+Example:
+
+```xml
+    <command library="ros" name="rostopicrobometry" topic="" repetitions="1" wait="0" reporterror="true" receivertimeout="10000"></command>
+```
+
 
 # 4. Troubleshooting
 
