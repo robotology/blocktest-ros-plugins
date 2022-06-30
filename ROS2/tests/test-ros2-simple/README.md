@@ -5,6 +5,7 @@ This test is designed for testing ROS2 applications.
 - [Robotology-superbuild](https://github.com/robotology/robotology-superbuild) or just YCM
 - [Blocktest](https://github.com/robotology/blocktest)
 - [Blocktest-ros](https://github.com/robotology/blocktest-ros-plugins)
+- [robometry](https://github.com/robotology/robometry)(optional)
 - Install ROS2 foxy
 
 # 3. Execution
@@ -29,5 +30,11 @@ the test will try to receive messages through the ROS2 topic message system used
 ```bash
 cd <your-blocktest-clonedir>/blocktest/install/bin
 ./blocktestrunner failreceive.xml tests/test-ros2-simple
+```
+- Robometry(needs `robometry` installed and enabled)
+The test will launch a jointState publisher and a robometry blockt in paraller. The robometry block dump the data received in mat files.
+```bash
+cd <your-blocktest-clonedir>/blocktest/install/bin
+./blocktestrunner robometry.xml tests/test-ros2-simple
 ```
 
