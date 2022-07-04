@@ -19,6 +19,12 @@ sudo apt-get install -y cmake libboost-all-dev
 ### 2.1.1. ROS2
 **ROS2 Foxy** version see https://docs.ros2.org/en/rolling/Installation.html
 
+For position controlll install:
+```bash
+apt-get install ros-foxy-ros2-control
+apt-get install ros-foxy-ros2-controllers
+```
+
 ### 2.1.2. Blocktest
 See https://github.com/robotology/blocktest
 

@@ -12,6 +12,12 @@
 	
 
 	<!-- Tests -->
+
+	<test file="read-float64multiarray.xml" repetitions="1" repetitionsfortime="" code="read-multiarray" parallel="true" />
+	<test file="write-float64multiarray.xml" repetitions="1" repetitionsfortime="" code="write-multiarray" parallel="true" />
+	
+	<test file="nop.xml" repetitions="1" repetitionsfortime="" code="nop" parallel="false" />
+
 	<test file="read-string.xml" repetitions="1" repetitionsfortime="" code="read" parallel="true" />
 	<test file="write-string.xml" repetitions="1" repetitionsfortime="" code="write" parallel="true" />
 	

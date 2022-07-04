@@ -22,6 +22,7 @@ constexpr char robometryjson[] = {"robometryjson"};
 constexpr char dataTypeGeometryTwist[] = "geometry_msgs_Twist";
 constexpr char dataTypeString[] = "std_msg_String";
 constexpr char dataTypeJointState[] = "sensor_msgs_JointState";
+constexpr char dataTypeFloat64MultiArray[] = "std_msgs_Float64MultiArray";
 
 };	// namespace rossyntax
 

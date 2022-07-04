@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<testbody>
+	<info note='Publish on OS topic.' shortnote='' version='1.0' />
+	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
+	<settings wait='0' />
+
+	<command library='general' name='wait' seconds='2' repetitions='1' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicwrite' topic='mytopic' data='{"std_msgs_Float64MultiArray":{"list": [1, 2, 3, 4]}}' repetitions='10' wait='1' reporterror='true' />
+</testbody>
