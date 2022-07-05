@@ -94,6 +94,9 @@ These action blocks are contained in blocktest-ros2-plugin.
     - sensor_msgs::msg::JointState
     ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
     
+    - std_msgs::msg::Float64MultiArray
+      ```{"std_msgs_Float64MultiArray":{"list":[1, 2, 3, 4]}}```
+    
   Example:  
   ```xml
         <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' receivertimeout="10000" repetitions='1' wait='0' reporterror='true'/>
@@ -112,6 +115,9 @@ Note that the `receivedtimeout` in in millisecoonds.
     
     - sensor_msgs::msg::JointState
     ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
+    
+    - std_msgs::msg::Float64MultiArray
+      ```{"std_msgs_Float64MultiArray":{"list":[1, 2, 3, 4]}}```
 
 Example:
 
