@@ -73,6 +73,15 @@ void ActionTopicRead::beforeExecute()
 					TXLOG(Severity::debug) << "Subscribe to msg type:joint_state" << std::endl;
 				}
 			}
+			else if (j.contains(rossyntax::dataTypeFloat64MultiArray))
+			{
+				if (subscription_msgs_MultyArray_ == nullptr)
+				{
+					subscription_msgs_MultyArray_ = this->create_subscription<std_msgs::msg::Float64MultiArray>(topic_, 10, std::bind(&ActionTopicRead::callbackRcvMultiArray, this, _1));
+					TXLOG(Severity::debug) << "Subscribe to msg type:multyarray" << std::endl;
+				}
+			}
+
 			else
 			{
 				TXLOG(Severity::error) << "Not supported data type" << std::endl;
@@ -179,6 +188,24 @@ void ActionTopicRead::callbackRcvJointState(const sensor_msgs::msg::JointState::
 
 	received_ = true;
 	TXLOG(Severity::debug) << "Callback receive sensor_msgs::msg::JointState:" << std::endl;
+	executor_.cancel();
+}
+
+void ActionTopicRead::callbackRcvMultiArray(const std_msgs::msg::Float64MultiArray::ConstSharedPtr msg)
+{
+	json j = json::parse(expected_);
+	auto expected = j.at(rossyntax::dataTypeFloat64MultiArray).at("list").get<std::vector<double>>();
+
+	if (expected != msg->data)
+	{
+		std::stringstream logStream;
+		logStream << "Read unexpected value: "
+				  << " topic:" << topic_;
+		addProblem({0, 0}, Severity::error, logStream.str(), false);
+	}
+
+	received_ = true;
+	TXLOG(Severity::debug) << "Callback receive std_msgs::msg::Float64MultiArray" << std::endl;
 	executor_.cancel();
 }
 

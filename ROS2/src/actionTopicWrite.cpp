@@ -39,7 +39,9 @@ void ActionTopicWrite::beforeExecute()
 		else if (j.contains(rossyntax::dataTypeString))
 			publisherString_ = create_publisher<std_msgs::msg::String>(topic_, 10);
 		else if (j.contains(rossyntax::dataTypeJointState))
-			publisherJointState_ = create_publisher<sensor_msgs::msg::JointState>(topic_, 10);			
+			publisherJointState_ = create_publisher<sensor_msgs::msg::JointState>(topic_, 10);
+		else if (j.contains(rossyntax::dataTypeFloat64MultiArray))
+			publisherMultiArray_ = create_publisher<std_msgs::msg::Float64MultiArray>(topic_, 10);
 	}
 }
 
@@ -92,6 +94,17 @@ execution ActionTopicWrite::execute(const TestRepetitions&)
 			message.effort.push_back(effort);
 			publisherJointState_->publish(message);
 			TXLOG(Severity::debug) << "Publish jointstate"
+								   << " topic:" << topic_ << std::endl;
+		}
+		else if (j.contains(rossyntax::dataTypeFloat64MultiArray))
+		{
+			auto message = std_msgs::msg::Float64MultiArray();
+
+			auto out=j.at(rossyntax::dataTypeFloat64MultiArray).at("list").get<std::vector<double>>();
+			message.data.insert(message.data.end(),out.begin(),out.end());
+
+			publisherMultiArray_->publish(message);
+			TXLOG(Severity::debug) << "Publish Float64MultiArray"
 								   << " topic:" << topic_ << std::endl;
 		}
 	}

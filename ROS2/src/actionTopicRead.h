@@ -17,6 +17,7 @@
 #include <mutex>
 #include <sensor_msgs/msg/joint_state.hpp>
 #include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/float64_multi_array.hpp>
 
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
@@ -45,10 +46,12 @@ class ActionTopicRead : public Action, public rclcpp::Node
 	virtual void callbackRcvString(const std_msgs::msg::String::ConstSharedPtr msg);
 	virtual void callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
 	virtual void callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg);
+	virtual void callbackRcvMultiArray(const std_msgs::msg::Float64MultiArray::ConstSharedPtr msg);
 
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_std_msgs_String_{nullptr};
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_geometry_msgs_Twist_{nullptr};
 	rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr subscription_msgs_JointState_{nullptr};
+	rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr subscription_msgs_MultyArray_{nullptr};
 
 	rclcpp::executors::MultiThreadedExecutor executor_;
 
