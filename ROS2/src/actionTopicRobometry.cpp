@@ -22,6 +22,7 @@
 using std::placeholders::_1;
 using namespace RosAction;
 using namespace robometry;
+using json = nlohmann::json;
 
 ACTIONREGISTER_DEF_TYPE(RosAction::ActionTopicRobometry, rosactions::rostopicrobometry);
 
@@ -40,12 +41,21 @@ void ActionTopicRobometry::beforeExecute()
 
 		getCommandAttribute(rossyntax::topic, topic_);
 		getCommandAttribute(rossyntax::receiveTimeout, receiveTimeout_);
+		getCommandAttribute(rossyntax::dimensions, dimensions_str);
+
+		json j = json::parse(dimensions_str);
+	    dimensions = j.at("list").get<std::vector<size_t>>();
+		if (dimensions.size() > 2) {
+			TXLOG(Severity::error) << "Dimensions invalid, it must be >0, <= 2" << std::endl;
+			return;
+		}
+
 		BufferConfig bufferConfig;
 		// In case of using different message type, we use the json configuration
 		bufferConfig.yarp_robot_name = "robot";
 		bufferConfig.description_list = {""};
 		// FIXME the dimensionality of the message is not handled, the test is sending scalar values
-		bufferConfig.channels = {{"name", {1, 1}}, {"position", {1, 1}}, {"velocity", {1, 1}}, {"effort", {1, 1}}};
+		bufferConfig.channels = {{"name", dimensions}, {"position", dimensions}, {"velocity", dimensions}, {"effort", dimensions}};
 		bufferConfig.path = "./";
 		bufferConfig.filename = "robometry_blocktest_data";
 		bufferConfig.n_samples = 100000;
@@ -73,19 +83,16 @@ void ActionTopicRobometry::callbackRcvJointState(const sensor_msgs::msg::JointSt
 {
 	if (msg.get() != nullptr)
 	{
-		TXLOG(Severity::debug) << "I am reading something......" << std::endl;
-		TXLOG(Severity::debug) << "Sizes: name: " << msg->name.size() << " position: " << msg->position.size() << " velocity: " << msg->velocity.size() << " effort: " << msg->effort.size()
-							   << std::endl;
+		if (msg->name.size() != dimensions[0]*dimensions[1]) {
+			TXLOG(Severity::error) << "Msg size and robometry dimension mismatch" << std::endl;
+			executor_.cancel();
+			return;
+		}
+
 		bufferManager_.push_back(msg->name, "name");
 		bufferManager_.push_back(msg->position, "position");
 		bufferManager_.push_back(msg->velocity, "velocity");
 		bufferManager_.push_back(msg->effort, "effort");
-		// TODO maybe we have to handle in this way
-		// for (size_t t = 0; t < msg->name.size(); ++t)
-		// {
-		// 	TXLOG(Severity::debug) << "name: " << msg->name[t] << " position: " << msg->position[t] << " velocity: " << msg->velocity[t] << " effort: " << msg->effort[t] << std::endl;
-		// 	bufferManager_.push_back({msg->get().name}, "name");
-		// }
 		received_ = true;
 	}
 	executor_.cancel();

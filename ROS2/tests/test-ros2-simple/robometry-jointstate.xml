@@ -4,6 +4,6 @@
 	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
 	<settings wait='0' />
 	<!-- receivertimeout in msec -->
-	<command library='ros2' name='rostopicrobometry' topic='mytopic' receivertimeout="10000"  repetitions='2' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicrobometry' dimensions='{"list": [1, 1]}' topic='mytopic' receivertimeout="10000"  repetitions='2' wait='1' reporterror='true' />
 
 </testbody>

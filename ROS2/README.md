@@ -37,7 +37,7 @@ In order to compile `actionTopicRobometry`, install [`robometry`](https://github
 To compile just execute the following commands in a bash
 terminal.
 ```bash
-git clone https://github.com/robotology/blocktest-ros2-plugins     
+git clone https://github.com/robotology/blocktest-ros2-plugins
 cd blocktest-ros2-plugins
 mkdir build
 cd build
@@ -85,19 +85,19 @@ These action blocks are contained in blocktest-ros2-plugin.
 
     Read from ROS2 topic.
     ROS2 supported types:
-    - std_msgs::msg::String  
+    - std_msgs::msg::String
       ```{"std_msg_String":{"data":"tosend"}}```
 
-    - geometry_msgs::msg::Twist  
+    - geometry_msgs::msg::Twist
       ```{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}```
 
     - sensor_msgs::msg::JointState
     ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
-    
+
     - std_msgs::msg::Float64MultiArray
       ```{"std_msgs_Float64MultiArray":{"list":[1, 2, 3, 4]}}```
-    
-  Example:  
+
+  Example:
   ```xml
         <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' receivertimeout="10000" repetitions='1' wait='0' reporterror='true'/>
   ```
@@ -107,15 +107,15 @@ Note that the `receivedtimeout` in in millisecoonds.
 
     Write to ROS2 topic.
     ROS2 supported types:
-    - std_msgs::msg::String  
+    - std_msgs::msg::String
       ```{"std_msg_String":{"data":"tosend"}}```
 
-    - geometry_msgs::msg::Twist  
+    - geometry_msgs::msg::Twist
       ```{"geometry_msgs_Twist":{"x":1,"y":2,"z":3,"xa":4,"ya":0,"za":0}}```
-    
+
     - sensor_msgs::msg::JointState
     ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
-    
+
     - std_msgs::msg::Float64MultiArray
       ```{"std_msgs_Float64MultiArray":{"list":[1, 2, 3, 4]}}```
 
@@ -129,14 +129,14 @@ Example:
 
     Read from a ROS2 topic and dump using [`robometry`](https://github.com/robotology/robometry).
     ROS2 supported types:
-    
+
     - sensor_msgs::msg::JointState
     ```{"sensor_msgs_JointState":{"name":"ankle","position":2,"velocity":3,"effort":4}}```
 
 Example:
 
 ```xml
-    <command library="ros" name="rostopicrobometry" topic="" repetitions="1" wait="0" reporterror="true" receivertimeout="10000"></command>
+    <command library="ros" name="rostopicrobometry" topic="" repetitions="1" wait="0" reporterror="true" dimensions='{"list": [1, 1]}' receivertimeout="10000"></command>
 ```
 
 
@@ -150,8 +150,8 @@ Example:
 
 ## 5.1. Subscribe to topics with cmdline
 
-`ros2 topic  echo /mytopic`  
-`ros2 topic pub /mytopic std_msgs/String "data: hello"`  
+`ros2 topic  echo /mytopic`
+`ros2 topic pub /mytopic std_msgs/String "data: hello"`
 
 
 `ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "  {linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"`

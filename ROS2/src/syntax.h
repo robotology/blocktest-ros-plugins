@@ -18,6 +18,7 @@ constexpr char datatype[] = {"datatype"};
 constexpr char expected[] = {"expected"};
 constexpr char receiveTimeout[] = {"receivertimeout"};
 constexpr char robometryjson[] = {"robometryjson"};
+constexpr char dimensions[] = {"dimensions"};
 
 constexpr char dataTypeGeometryTwist[] = "geometry_msgs_Twist";
 constexpr char dataTypeString[] = "std_msg_String";

@@ -17,6 +17,8 @@
 #include <condition_variable>
 #include <geometry_msgs/msg/twist.hpp>
 #include <mutex>
+#include <vector>
+#include <string>
 
 #include "actionTopicRead.h"
 #include "rclcpp/rclcpp.hpp"
@@ -37,6 +39,8 @@ class ActionTopicRobometry : public ActionTopicRead
 	// virtual void callbackRcvTwist(const geometry_msgs::msg::Twist::ConstSharedPtr msg);
 	void callbackRcvJointState(const sensor_msgs::msg::JointState::ConstSharedPtr msg) override;
 	std::string robometryJson_;	 // Not used yet
+	std::string dimensions_str;
+	std::vector<size_t> dimensions;
 	robometry::BufferManager bufferManager_;
 	ACTIONREGISTER_DEC_TYPE(ActionTopicRobometry)
 };
