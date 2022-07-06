@@ -1,1 +1,1 @@
-<command library="ros" name="rostopicread" topic="" expected="" repetitions="1" wait="0" reporterror="true" receivertimeout="10000"></command>
+<command library="ros" name="rostopicread" topic="" expected="" tolerance="" repetitions="1" wait="0" reporterror="true" receivertimeout="10000"></command>

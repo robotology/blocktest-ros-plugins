@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<testbody>
+	<info note='Publish on OS topic.' shortnote='' version='1.0' />
+	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
+	<settings wait='0' />
+
+	<command library='general' name='wait' seconds='0.1' repetitions='1' wait='0' reporterror='true' />
+	<command library='ros2' name='rostopicwrite' topic='forward_command_controller/commands' data='{"std_msgs_Float64MultiArray":{"list": [0.5, 0, 0, 0, 0, 0]}}' repetitions='1' wait='0' reporterror='true' />
+</testbody>

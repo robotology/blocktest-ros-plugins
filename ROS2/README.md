@@ -97,6 +97,12 @@ These action blocks are contained in blocktest-ros2-plugin.
     - std_msgs::msg::Float64MultiArray
       ```{"std_msgs_Float64MultiArray":{"list":[1, 2, 3, 4]}}```
 
+    **Tolerance**
+    It is also present a "tolerance" parameter.
+
+    **Receiver timeout**
+    It is also present a "receivertimeout" parameter in msec.
+
   Example:
   ```xml
         <command name='rostopicread' topic='' expected='{"std_msg_String":{"data":"tosend"}}' receivertimeout="10000" repetitions='1' wait='0' reporterror='true'/>
@@ -159,6 +165,17 @@ Example:
 
 NOTE da cancellare
 
+Run:
 ```
+ cd install
+ source local_setup.sh
  ros2 launch gazebo_ros2_control_bolt bolt_system_position_only_gazebo.launch.py
+```
+
+Build:
+```
+git submodule update --init
+
+colcon build --packages-up-to gazebo_ros2_control_bolt
+colcon build --packages-select ros2_description_bolt
 ```

@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<testbody>
+	<info note='Subscribe on OS topic.' shortnote='' version='1.0' />
+	<logging loggingtype='position' loggingpart='' loggingwrappername='' />
+	<settings wait='0' />
+	<!-- receivertimeout in msec -->
+	<command library='general' name='wait' seconds='2' repetitions='1' wait='0.1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='joint_states' expected='{"sensor_msgs_JointState":{"name":"FL_HAA","position":0.5,"velocity":0,"effort":0}}' receivertimeout="10000"   tolerance="0.25" repetitions='1' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='joint_states' expected='{"sensor_msgs_JointState":{"name":"FR_HAA","position":0.0,"velocity":0,"effort":0}}' receivertimeout="10000"   tolerance="0.25" repetitions='1' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='joint_states' expected='{"sensor_msgs_JointState":{"name":"FL_KFE","position":0.0,"velocity":0,"effort":0}}' receivertimeout="10000"   tolerance="0.25" repetitions='1' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='joint_states' expected='{"sensor_msgs_JointState":{"name":"FL_HFE","position":0.0,"velocity":0,"effort":0}}' receivertimeout="10000"   tolerance="0.25" repetitions='1' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='joint_states' expected='{"sensor_msgs_JointState":{"name":"FR_KFE","position":0.0,"velocity":0,"effort":0}}' receivertimeout="10000"   tolerance="0.25" repetitions='1' wait='1' reporterror='true' />
+	<command library='ros2' name='rostopicread' topic='joint_states' expected='{"sensor_msgs_JointState":{"name":"FR_HFE","position":0.0,"velocity":0,"effort":0}}' receivertimeout="10000"   tolerance="0.25" repetitions='1' wait='1' reporterror='true' />
+
+</testbody>

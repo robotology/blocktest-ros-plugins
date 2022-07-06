@@ -158,9 +158,9 @@ void ActionTopicRead::callbackRcvJointState(const sensor_msgs::msg::JointState::
 {
 	json j = json::parse(expected_);
 	std::string name = j.at(rossyntax::dataTypeJointState).value("name", "xxx");
-	double position = j.at(rossyntax::dataTypeJointState).value("position", 0);
-	double velocity = j.at(rossyntax::dataTypeJointState).value("velocity", 0);
-	double effort = j.at(rossyntax::dataTypeJointState).value("effort", 0);
+	double position = j.at(rossyntax::dataTypeJointState).at("position").get<nlohmann::json::number_float_t>();
+	double velocity = j.at(rossyntax::dataTypeJointState).at("velocity").get<nlohmann::json::number_float_t>();
+	double effort =  j.at(rossyntax::dataTypeJointState).at("effort").get<nlohmann::json::number_float_t>();
 
 	bool flag = false;
 	for (size_t t = 0; t < msg->name.size(); ++t)
@@ -171,10 +171,11 @@ void ActionTopicRead::callbackRcvJointState(const sensor_msgs::msg::JointState::
 			if (std::abs(msg->position[t] - position) > tolerance_)
 			{
 				std::stringstream logStream;
-				logStream << "Read unexpected value for position: "
+				logStream << "Read unexpected value for joint: "<<name
 						  << " topic:" << topic_ << " position:" << msg->position[t] << " expected:" << position << " tolerance:" << tolerance_;
 				addProblem({0, 0}, Severity::error, logStream.str(), true);
 			}
+			/*
 			if (std::abs(msg->velocity[t] - velocity) > tolerance_)
 			{
 				std::stringstream logStream;
@@ -189,6 +190,7 @@ void ActionTopicRead::callbackRcvJointState(const sensor_msgs::msg::JointState::
 						  << " topic:" << topic_ << " effort:" << msg->effort[t] << " expected:" << effort << " tolerance:" << tolerance_;
 				addProblem({0, 0}, Severity::error, logStream.str(), true);
 			}
+			*/
 			break;
 		}
 	}
