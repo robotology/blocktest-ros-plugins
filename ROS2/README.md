@@ -155,3 +155,10 @@ Example:
 
 
 `ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "  {linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"`
+
+
+NOTE da cancellare
+
+```
+ ros2 launch gazebo_ros2_control_bolt bolt_system_position_only_gazebo.launch.py
+```

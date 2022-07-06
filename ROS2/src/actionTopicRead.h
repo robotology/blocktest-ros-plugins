@@ -1,6 +1,6 @@
 /******************************************************************************
  *                                                                            *
- * Copyright (C) 2021 Fondazione Istituto Italiano di Tecnologia (IIT)        *
+ * Copyright (C) 2022 Fondazione Istituto Italiano di Tecnologia (IIT)        *
  * All Rights Reserved.                                                       *
  *                                                                            *
  ******************************************************************************/
@@ -16,8 +16,8 @@
 #include <geometry_msgs/msg/twist.hpp>
 #include <mutex>
 #include <sensor_msgs/msg/joint_state.hpp>
-#include <std_msgs/msg/string.hpp>
 #include <std_msgs/msg/float64_multi_array.hpp>
+#include <std_msgs/msg/string.hpp>
 
 #include "action.h"
 #include "rclcpp/rclcpp.hpp"
@@ -37,6 +37,7 @@ class ActionTopicRead : public Action, public rclcpp::Node
    protected:
 	std::string topic_{""};
 	std::string expected_{""};
+	double tolerance_{0};
 	int receiveTimeout_{1000};
 	std::unique_ptr<std::thread> threadTimeout_;
 	void timeout();

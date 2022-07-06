@@ -1,6 +1,6 @@
 /******************************************************************************
  *                                                                            *
- * Copyright (C) 2021 Fondazione Istituto Italiano di Tecnologia (IIT)        *
+ * Copyright (C) 2022 Fondazione Istituto Italiano di Tecnologia (IIT)        *
  * All Rights Reserved.                                                       *
  *                                                                            *
  ******************************************************************************/
@@ -16,6 +16,7 @@ constexpr char data[] = {"data"};
 constexpr char topic[] = {"topic"};
 constexpr char datatype[] = {"datatype"};
 constexpr char expected[] = {"expected"};
+constexpr char tolerance[] = {"tolerance"};
 constexpr char receiveTimeout[] = {"receivertimeout"};
 constexpr char robometryjson[] = {"robometryjson"};
 constexpr char dimensions[] = {"dimensions"};

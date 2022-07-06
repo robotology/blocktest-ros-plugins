@@ -1,6 +1,6 @@
 /******************************************************************************
  *                                                                            *
- * Copyright (C) 2021 Fondazione Istituto Italiano di Tecnologia (IIT)        *
+ * Copyright (C) 2022 Fondazione Istituto Italiano di Tecnologia (IIT)        *
  * All Rights Reserved.                                                       *
  *                                                                            *
  ******************************************************************************/
@@ -44,6 +44,7 @@ void ActionTopicRead::beforeExecute()
 		getCommandAttribute(rossyntax::topic, topic_);
 		getCommandAttribute(rossyntax::expected, expected_);
 		getCommandAttribute(rossyntax::receiveTimeout, receiveTimeout_);
+		getCommandAttribute(rossyntax::tolerance, tolerance_);
 
 		try
 		{
@@ -167,12 +168,26 @@ void ActionTopicRead::callbackRcvJointState(const sensor_msgs::msg::JointState::
 		if (msg->name[t] == name)
 		{
 			flag = true;
-			if (msg->position[t] != position || msg->velocity[t] != velocity || msg->effort[t] != effort)
+			if (std::abs(msg->position[t] - position) > tolerance_)
 			{
 				std::stringstream logStream;
-				logStream << "Read unexpected value: "
-						  << " topic:" << topic_;
-				addProblem({0, 0}, Severity::error, logStream.str(), false);
+				logStream << "Read unexpected value for position: "
+						  << " topic:" << topic_ << " position:" << msg->position[t] << " expected:" << position << " tolerance:" << tolerance_;
+				addProblem({0, 0}, Severity::error, logStream.str(), true);
+			}
+			if (std::abs(msg->velocity[t] - velocity) > tolerance_)
+			{
+				std::stringstream logStream;
+				logStream << "Read unexpected value for velocity: "
+						  << " topic:" << topic_ << " velocity:" << msg->velocity[t] << " expected:" << velocity << " tolerance:" << tolerance_;
+				addProblem({0, 0}, Severity::error, logStream.str(), true);
+			}
+			if (std::abs(msg->effort[t] - effort) > tolerance_)
+			{
+				std::stringstream logStream;
+				logStream << "Read unexpected value for effort: "
+						  << " topic:" << topic_ << " effort:" << msg->effort[t] << " expected:" << effort << " tolerance:" << tolerance_;
+				addProblem({0, 0}, Severity::error, logStream.str(), true);
 			}
 			break;
 		}
